@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Journal {
-    
-    private ArrayList<Entry> entries;
 
+    private ArrayList<Entry> entries;
 
     // MODIFIES: this
     // EFFECTS: creates an empty list of enteries
@@ -21,7 +20,6 @@ public class Journal {
         entries.add(entry);
     }
 
-
     // REQURIES: entry is not null
     // MODIFIES: this
     // EFFECTS: removes the given entry to the journal
@@ -29,15 +27,14 @@ public class Journal {
         entries.remove(entry);
     }
 
-
     // EFFECTS: returns a list of all entries; list may be empty
     public ArrayList<Entry> getAllEntries() {
         return new ArrayList<>(entries);
     }
 
-
     // REQUIRES: date is not null
-    // EFFECTS: returns a list of entries logged on the specified date; list may be empty
+    // EFFECTS: returns a list of entries logged on the specified date; list may be
+    // empty
     public ArrayList<Entry> getEnteriesByDate(LocalDate date) {
         ArrayList<Entry> result = new ArrayList<>();
         for (Entry e : entries) {
@@ -48,22 +45,22 @@ public class Journal {
         return result;
     }
 
-
     // REQUIRES: mood is not null
-    // EFFECTS: returns a list of entries logged on the specified mood; list may be empty
+    // EFFECTS: returns a list of entries logged on the specified mood; list may be
+    // empty
     public ArrayList<Entry> getEnteriesByMood(Entry.Mood mood) {
         ArrayList<Entry> result = new ArrayList<>();
         for (Entry e : entries) {
-            if (e.getMood().equalsIgnoreCase(mood.toString())) {
+            if (e.getMood() == mood) {
                 result.add(e);
             }
         }
         return result;
     }
 
-
     // REQUIRES: songTitle is not null
-    // EFFECTS: returns a list of entries logged on the specified song title; list may be empty
+    // EFFECTS: returns a list of entries logged on the specified song title; list
+    // may be empty
     public ArrayList<Entry> getEnteriesBySongTitle(String songTitle) {
         ArrayList<Entry> result = new ArrayList<>();
         for (Entry e : entries) {
@@ -74,9 +71,9 @@ public class Journal {
         return result;
     }
 
-
     // REQUIRES: songArtist is not null
-    // EFFECTS: returns a list of entries logged on the specified song artist; list may be empty
+    // EFFECTS: returns a list of entries logged on the specified song artist; list
+    // may be empty
     public ArrayList<Entry> getEnteriesBySongArtist(String songArtist) {
         ArrayList<Entry> result = new ArrayList<>();
         for (Entry e : entries) {
@@ -87,10 +84,10 @@ public class Journal {
         return result;
     }
 
-
     // MODIFIES: this
-    // EFFECTS: if any entry in the journal has a song title equal to oldSongTitle (case-insensitive),
-    //          updates its song title to newSongTitle
+    // EFFECTS: if any entry in the journal has a song title equal to oldSongTitle
+    // (case-insensitive),
+    // updates its song title to newSongTitle
     public void updateSongTitle(String oldSongTitle, String newSongTitle) {
         for (Entry e : entries) {
             if (e.getSongName().equalsIgnoreCase(oldSongTitle)) {
@@ -99,10 +96,10 @@ public class Journal {
         }
     }
 
-
     // MODIFIES: this
-    // EFFECTS: if any entry in the journal has a song artist equal to oldSongArtist (case-insensitive),
-    //          updates its artist to newSongArtist
+    // EFFECTS: if any entry in the journal has a song artist equal to oldSongArtist
+    // (case-insensitive),
+    // updates its artist to newSongArtist
     public void updateSongArtist(String oldSongArtist, String newSongArtist) {
         for (Entry e : entries) {
             if (e.getSongArtist().equalsIgnoreCase(oldSongArtist)) {
@@ -111,29 +108,28 @@ public class Journal {
         }
     }
 
-
     // MODIFIES: this
-    // EFFECTS: if any entry in the journal has a date equal to oldDate (case-insensitive),
-    //          updates its artist to newDate
-    public void updateDate(String oldDate, String newDate) {
+    // EFFECTS: if any entry in the journal has a date equal to oldDate
+    // (case-insensitive),
+    // updates its artist to newDate
+    public void updateDate(LocalDate oldDate, LocalDate newDate) {
         for (Entry e : entries) {
-            if (e.getSongArtist().equalsIgnoreCase(oldDate)) {
-                e.updateSongArtist(newDate);
+            if (e.getDate().equals(oldDate)) {
+                e.updateDate(newDate);
             }
         }
     }
 
-
     // MODIFIES: this
-    // EFFECTS: if any entry in the journal has a mood equal to oldMood (case-insensitive),
-    //          updates its artist to newMood
-    public void updateMood(String oldMood, String newMood) {
+    // EFFECTS: if any entry in the journal has a mood equal to oldMood
+    // (case-insensitive),
+    // updates its artist to newMood
+    public void updateMood(Entry.Mood oldMood, Entry.Mood newMood) {
         for (Entry e : entries) {
-            if (e.getSongArtist().equalsIgnoreCase(oldMood)) {
-                e.updateSongArtist(newMood);
+            if (e.getMood() == oldMood) {
+                e.updateMood(newMood);
             }
         }
     }
-    
-    
+
 }
