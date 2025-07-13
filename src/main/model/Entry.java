@@ -49,22 +49,22 @@ public class Entry {
     // REQUIRES: songArtist has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songArtist
-    public void updateSongArtist(String songArtist) {
-        this.songArtist = songArtist;
+    public void updateSongArtist(String newsongArtist) {
+        this.songArtist = newsongArtist;
     }
 
     // REQUIRES: date cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new date
-    public void updateDate(LocalDate date) {
-        this.date = date;
+    public void updateDate(LocalDate newDate) {
+        this.date = newDate;
     }
 
     // REQUIRES: mood cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new mood
-    public void updateMood(Mood mood) {
-        this.mood = mood;
+    public void updateMood(Mood newMood) {
+        this.mood = newMood;
     }
 
 
