@@ -39,12 +39,14 @@ public class JournalApp {
         System.out.println("Thanks for using Resonance!");
     }
 
+
     // MODIFIES: this
     // EFFECTS: initializes journal
     private void init() {
         journal = new Journal();
         input = new Scanner(System.in);
     }
+
 
     // EFFECTS: displays the main menu of options for the user
     private void mainMenu() {
@@ -57,8 +59,9 @@ public class JournalApp {
 
     }
 
+
     // MODIFIES: this
-    // EFFECTS: executes user commands from the main menu
+    // EFFECTS: executes user commands from the main menu; if input not valid returns to mainMenu()
     private void executeCommand(String command) {
         if (command.equals("a")) {
             addEntry();
@@ -69,7 +72,8 @@ public class JournalApp {
         } else if (command.equals("u")) {
             updateEntryOption();
         } else {
-            System.out.println("Selection not valid...");
+            System.out.println("Selection not valid.");
+            mainMenu();
         }
     }
 
@@ -96,6 +100,7 @@ public class JournalApp {
         System.out.println("Entry added successfully!");
     }
 
+    
     // EFFECTS: displays options for entry viewing
     private void viewEntries() {
         System.out.println("\nView entries:");
@@ -184,12 +189,16 @@ public class JournalApp {
         }
     }
 
+
+
     // MODIFIES: this
     // EFFECTS: displays entries, then removes entry by ID if found, else prints
     //          error
+    //          if the journal is empty returns to mainMenu()
     private void removeEntry() {
         if (journal.getAllEntries().isEmpty()) {
             System.out.println("Your journal is empty. Nothing to remove.");
+            mainMenu();
         }
 
         System.out.println("\nCurrent Entries:");
@@ -208,14 +217,19 @@ public class JournalApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: lets the user select an entry update option
+    // EFFECTS: lets the user select an entry update option; if the journal is empty returns to mainMenu()
     private void updateEntryOption() {
-        System.out.println("\nUpdate entries:");
-        System.out.println("\tut -> update by song title");
-        System.out.println("\tur -> update by artist");
-        System.out.println("\tud -> update by date");
-        System.out.println("\tum -> update by mood");
-        System.out.print("Select an option: ");
+        if (journal.getAllEntries().isEmpty()) {
+            System.out.println("Your journal is empty. Nothing to update.");
+            mainMenu();
+        } else {
+            System.out.println("\nUpdate entries:");
+            System.out.println("\tut -> update by song title");
+            System.out.println("\tur -> update by artist");
+            System.out.println("\tud -> update by date");
+            System.out.println("\tum -> update by mood");
+            System.out.print("Select an option: ");
+        }
 
         updateEntry();
 
@@ -225,31 +239,105 @@ public class JournalApp {
 
 
     // MODIFIES: this
-    // EFFECTS: updates the entry based on the option selected by the user
+    // EFFECTS: prints all the enteris for the user to see;
+    //          updates the entry based on the option selected by the user
+    //          if choice is invalid returns to updateEntryOption();
     private void updateEntry() {
+        System.out.println("\nCurrent Entries:");
+        viewAllEntries();
+
         input.nextLine();
         String choice = input.nextLine();
         
         if (choice.equals("ut")) {
+            updateTheTitle();
+        } else if (choice.equals("ur")) {
+            updateTheArtist();
+        } else if (choice.equals("ud")) {
+            updateTheDate();
+        } else if (choice.equals("um")) {
+            updateTheMood();
+        } else {
+            System.out.println("Invalid option.");
+            updateEntryOption();
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: updates the song title of the spesified entry; if id not found returns to updateEntryOption(); 
+    private void updateTheTitle() {
+        System.out.println("Enter ID of entry to remove: ");
+        int id = input.nextInt();
+
+        Entry toUpdate = journal.getEntryById(id);
+        if (toUpdate != null) {
             String oldTitle = prompt("Enter the current song title: ");
             String newTitle = prompt("Enter the new song title: ");
             journal.updateSongTitle(oldTitle, newTitle);
-        } else if (choice.equals("ur")) {
+        } else {
+            System.out.println("No entry found with ID: " + id);
+            updateEntryOption();
+        }
+
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: updates the song artist of the spesified entry; if id nto found returns to updateEntryOption();
+    private void updateTheArtist() {
+        System.out.println("Enter ID of entry to remove: ");
+        int id = input.nextInt();
+
+        Entry toUpdate = journal.getEntryById(id);
+        
+        if (toUpdate != null) {
             String oldArtist = prompt("Enter the current song artist: ");
             String newArtist = prompt("Enter the new song artist: ");
             journal.updateSongArtist(oldArtist, newArtist);
-        } else if (choice.equals("ud")) {
+        } else {
+            System.out.println("No entry found with ID: " + id);
+            updateEntryOption();
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: updates the date of the spesified entry; if id not found returns to updateEntryOption();
+    private void updateTheDate() {
+        System.out.println("Enter ID of entry to remove: ");
+        int id = input.nextInt();
+
+        Entry toUpdate = journal.getEntryById(id);
+        
+        if (toUpdate != null) {
             LocalDate oldDate = LocalDate.parse(prompt("Enter the current entry date: "));
             LocalDate newDate = LocalDate.parse(prompt("Enter the new entry date: "));
             journal.updateDate(oldDate, newDate);
-        } else if (choice.equals("um")) {
+        } else {
+            System.out.println("No entry found with ID: " + id);
+            updateEntryOption();
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: updates the mood of the spesified entry; if id nto found returns to updateEntryOption();
+    private void updateTheMood() {
+        System.out.println("Enter ID of entry to remove: ");
+        int id = input.nextInt();
+
+        Entry toUpdate = journal.getEntryById(id);
+        
+        if (toUpdate != null) {
             String oldMoodString = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
             String newMoodString = prompt("Enter the new mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
             Entry.Mood oldMood = Entry.Mood.valueOf(oldMoodString);
             Entry.Mood newMood = Entry.Mood.valueOf(newMoodString);
             journal.updateMood(oldMood, newMood);
         } else {
-            System.out.println("Invalid option.");
+            System.out.println("No entry found with ID: " + id);
+            updateEntryOption();
         }
     }
 
