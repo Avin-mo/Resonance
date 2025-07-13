@@ -29,26 +29,45 @@ public class EntryTest {
 
     @Test
     public void updateSongTitleTest() {
-        e.updateSongTitle(e.getId(), "Someone Like You");
-        assertEquals("Someone Like You", e.getSongName());
+        e.updateSongTitle("Skyfall");
+        assertEquals("Skyfall", e.getSongName());
     }
 
     @Test
     public void updateSongArtistTest() {
-        e.updateSongArtist(e.getId(), "Lionel Richie");
-        assertEquals("Lionel Richie", e.getSongArtist());
+        e.updateSongArtist("Beyoncé");
+        assertEquals("Beyoncé", e.getSongArtist());
     }
 
     @Test
     public void updateDateTest() {
-        e.updateDate(e.getId(), LocalDate.of(2024, 3, 25));
-        assertEquals(LocalDate.of(2024, 3, 25), e.getDate());
+        LocalDate newDate = LocalDate.of(2025, 7, 13);
+        e.updateDate(newDate);
+        assertEquals(newDate, e.getDate());
     }
 
     @Test
     public void updateMoodTest() {
-        e.updateMood(e.getId(), Mood.CALM);
-        assertEquals(Mood.CALM, e.getMood());
+        e.updateMood(Mood.HAPPY);
+        assertEquals(Mood.HAPPY, e.getMood());
+    }
+
+    @Test
+    public void getColorTest() {
+        // initial mood: SAD
+        assertEquals("Blue", e.getColor());
+
+        e.updateMood(Mood.HAPPY);
+        assertEquals("Yellow", e.getColor());
+
+        e.updateMood(Mood.CALM);
+        assertEquals("Green", e.getColor());
+
+        e.updateMood(Mood.ANGRY);
+        assertEquals("Red", e.getColor());
+
+        e.updateMood(Mood.EXCITED);
+        assertEquals("Orange", e.getColor());
     }
 
 }
