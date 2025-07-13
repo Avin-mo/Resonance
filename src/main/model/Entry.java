@@ -41,38 +41,30 @@ public class Entry {
     // REQUIRES: songTitle has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songTitle
-    public void updateSongTitle(int id, String songTitle) {
-        if (this.id == id) {
-            this.songTitle = songTitle;
-        }
+    public void updateSongTitle(String newsongTitle) {
+        this.songTitle = newsongTitle;
     }
 
 
     // REQUIRES: songArtist has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songArtist
-    public void updateSongArtist(int id, String songArtist) {
-        if (this.id == id) {
-            this.songArtist = songArtist;
-        }
+    public void updateSongArtist(String songArtist) {
+        this.songArtist = songArtist;
     }
 
     // REQUIRES: date cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new date
-    public void updateDate(int id, LocalDate date) {
-        if (this.id == id) {
-            this.date = date;
-        }
+    public void updateDate(LocalDate date) {
+        this.date = date;
     }
 
     // REQUIRES: mood cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new mood
-    public void updateMood(int id, Mood mood) {
-        if (this.id == id) {
-            this.mood = mood;
-        }
+    public void updateMood(Mood mood) {
+        this.mood = mood;
     }
 
 
