@@ -22,12 +22,6 @@ public class Entry {
         EXCITED
     }
 
-
-    // EFFECTS: returns the color name corresponding to the mood
-    public String getColor() {
-        // stub
-    }
-
     // REQUIRES: songTitle has a non-zero length
     // EFFECTS: creates a journal entry with a date and a song title;
     //          account id is a positive integer not assigned to any other account;
@@ -60,6 +54,11 @@ public class Entry {
 
     // EFFECTS: returns mood of the entry
     public String getMood() {
+        return null; // stub
+    }
+
+    // EFFECTS: returns the color name corresponding to the mood
+    public String getColor() {
         return null; // stub
     }
 
