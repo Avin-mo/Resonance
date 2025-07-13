@@ -1,15 +1,12 @@
 package model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.time.LocalDate;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import model.Entry.Mood;
+
+import java.time.LocalDate;
 
 public class JournalTest {
     Journal journal;
