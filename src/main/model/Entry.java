@@ -22,6 +22,7 @@ public class Entry {
         EXCITED
     }
 
+
     // REQUIRES: songTitle has a non-zero length
     // EFFECTS: creates a journal entry with a date and a song title;
     //          account id is a positive integer not assigned to any other account;
@@ -30,11 +31,45 @@ public class Entry {
     }
 
 
+
+
+
+    // REQUIRES: songTitle has a non-zero length
+    // MODIFIES: this
+    // EFFECTS: updates the entry with the new songTitle
+    public void updateSongTitle(int id, String songTitle) {
+        // stub
+    }
+
+
+    // REQUIRES: songArtist has a non-zero length
+    // MODIFIES: this
+    // EFFECTS: updates the entry with the new songArtist
+    public void updateSongArtist(int id, String songArtist) {
+        // stub
+    }
+
+    // REQUIRES: date cannot be null
+    // MODIFIES: this
+    // EFFECTS: updates the entry with the new date
+    public void updateDate(int id, LocalDate date) {
+        // stub
+    }
+
+    // REQUIRES: mood cannot be null
+    // MODIFIES: this
+    // EFFECTS: updates the entry with the new mood
+    public void updateMood(int id, Mood mood) {
+        // stub
+    }
+
+
+
+
     // EFFECTS: returns entry id
     public int getId() {
         return 0; // stub
     }
-
 
     // EFFECTS: returns song name of the entry
     public String getSongName() {
