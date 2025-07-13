@@ -1,7 +1,6 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ public class EntryTest {
 
     @BeforeEach
     public void setup() {
-        p = new Entry("Hello", "Adele", LocalDate.of(2025, 7, 12), Mood.SAD);
+        e = new Entry("Hello", "Adele", LocalDate.of(2025, 7, 12), Mood.SAD);
     }
 
     @Test
