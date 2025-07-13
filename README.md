@@ -11,7 +11,7 @@ I chose this project because music is a big part of my daily life, I’m almost 
 
 ## User Stories
 
-- As a user, I want to be able to add a journal entry to my music journal and specify the song title, artist, mood, and date.
-- As a user, I want to be able to remove a journal entry.
-- As a user, I want to be able to update a spesific aspect of the journal entry; including song title, artist, mood, and date.
-- As a user, I want to be able to filter and view my journal enteires by categories; including song title, artist, mood, and date.
+- As a user, I want to be able to add multiple journal entries to my music journal and specify the song title, artist, mood, and date.
+- As a user, I want to be able to remove multiple journal entries.
+- As a user, I want to be able to update a spesific category of every journal entry; including song title, artist, mood, and date.
+- As a user, I want to be able to filter, list, and view my journal enteires by categories; including song title, artist, mood, and date.
