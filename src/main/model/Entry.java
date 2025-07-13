@@ -41,16 +41,16 @@ public class Entry {
     // REQUIRES: songTitle has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songTitle
-    public void updateSongTitle(String newsongTitle) {
-        this.songTitle = newsongTitle;
+    public void updateSongTitle(String newSongTitle) {
+        this.songTitle = newSongTitle;
     }
 
 
     // REQUIRES: songArtist has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songArtist
-    public void updateSongArtist(String newsongArtist) {
-        this.songArtist = newsongArtist;
+    public void updateSongArtist(String newSongArtist) {
+        this.songArtist = newSongArtist;
     }
 
     // REQUIRES: date cannot be null
