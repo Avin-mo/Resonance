@@ -18,7 +18,7 @@ public class Journal {
     // MODIFIES: this
     // EFFECTS: adds the given entry to the journal
     public void addEntry(Entry entry) {
-        // stub
+        entries.add(entry);
     }
 
 
@@ -26,40 +26,114 @@ public class Journal {
     // MODIFIES: this
     // EFFECTS: removes the given entry to the journal
     public void removeEntry(Entry entry) {
-        // stub
+        entries.remove(entry);
     }
 
 
     // EFFECTS: returns a list of all entries; list may be empty
     public ArrayList<Entry> getAllEntries() {
-        return null; // stub
+        return new ArrayList<>(entries);
     }
 
 
     // REQUIRES: date is not null
     // EFFECTS: returns a list of entries logged on the specified date; list may be empty
     public ArrayList<Entry> getEnteriesByDate(LocalDate date) {
-        return null; // stub
+        ArrayList<Entry> result = new ArrayList<>();
+        for (Entry e : entries) {
+            if (e.getDate().equals(date)) {
+                result.add(e);
+            }
+        }
+        return result;
     }
 
 
     // REQUIRES: mood is not null
     // EFFECTS: returns a list of entries logged on the specified mood; list may be empty
     public ArrayList<Entry> getEnteriesByMood(Entry.Mood mood) {
-        return null; // stub
+        ArrayList<Entry> result = new ArrayList<>();
+        for (Entry e : entries) {
+            if (e.getMood().equalsIgnoreCase(mood.toString())) {
+                result.add(e);
+            }
+        }
+        return result;
     }
 
 
     // REQUIRES: songTitle is not null
     // EFFECTS: returns a list of entries logged on the specified song title; list may be empty
     public ArrayList<Entry> getEnteriesBySongTitle(String songTitle) {
-        return null; // stub
+        ArrayList<Entry> result = new ArrayList<>();
+        for (Entry e : entries) {
+            if (e.getSongName().equalsIgnoreCase(songTitle)) {
+                result.add(e);
+            }
+        }
+        return result;
     }
 
 
     // REQUIRES: songArtist is not null
     // EFFECTS: returns a list of entries logged on the specified song artist; list may be empty
     public ArrayList<Entry> getEnteriesBySongArtist(String songArtist) {
-        return null; // stub
+        ArrayList<Entry> result = new ArrayList<>();
+        for (Entry e : entries) {
+            if (e.getSongArtist().equalsIgnoreCase(songArtist)) {
+                result.add(e);
+            }
+        }
+        return result;
     }
+
+
+    // MODIFIES: this
+    // EFFECTS: if any entry in the journal has a song title equal to oldSongTitle (case-insensitive),
+    //          updates its song title to newSongTitle
+    public void updateSongTitle(String oldSongTitle, String newSongTitle) {
+        for (Entry e : entries) {
+            if (e.getSongName().equalsIgnoreCase(oldSongTitle)) {
+                e.updateSongTitle(newSongTitle);
+            }
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: if any entry in the journal has a song artist equal to oldSongArtist (case-insensitive),
+    //          updates its artist to newSongArtist
+    public void updateSongArtist(String oldSongArtist, String newSongArtist) {
+        for (Entry e : entries) {
+            if (e.getSongArtist().equalsIgnoreCase(oldSongArtist)) {
+                e.updateSongArtist(newSongArtist);
+            }
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: if any entry in the journal has a date equal to oldDate (case-insensitive),
+    //          updates its artist to newDate
+    public void updateDate(String oldDate, String newDate) {
+        for (Entry e : entries) {
+            if (e.getSongArtist().equalsIgnoreCase(oldDate)) {
+                e.updateSongArtist(newDate);
+            }
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: if any entry in the journal has a mood equal to oldMood (case-insensitive),
+    //          updates its artist to newMood
+    public void updateMood(String oldMood, String newMood) {
+        for (Entry e : entries) {
+            if (e.getSongArtist().equalsIgnoreCase(oldMood)) {
+                e.updateSongArtist(newMood);
+            }
+        }
+    }
+    
+    
 }
