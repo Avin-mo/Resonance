@@ -84,6 +84,18 @@ public class Journal {
         return result;
     }
 
+
+    // REQUIRES: id is not null
+    // EFFECTS: returns the Entry with the given id, or null if not found
+    public Entry getEntryById(int id) {
+        for (Entry e : entries) {
+            if (e.getId() == id) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     // MODIFIES: this
     // EFFECTS: if any entry in the journal has a song title equal to oldSongTitle
     // (case-insensitive),
