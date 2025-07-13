@@ -30,13 +30,6 @@ public class Journal {
     }
 
 
-    // MODIFIES: this
-    // EFFECTS: updates the specified entry with the new details if it exists
-    public void updateEntry(Entry entry) {
-        // stub
-    }
-
-
     // EFFECTS: returns a list of all entries; list may be empty
     public ArrayList<Entry> getAllEntries() {
         return null; // stub
