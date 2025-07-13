@@ -26,7 +26,6 @@ public class EntryTest {
         assertTrue(e.getId() > 0);
     }
 
-
     @Test
     public void updateSongTitleTest() {
         e.updateSongTitle("Skyfall");
