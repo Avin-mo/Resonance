@@ -199,4 +199,61 @@ public class JournalTest {
         var unknown = journal.getEnteriesBySongArtist("Unknown Artist");
         assertTrue(unknown.isEmpty());
     }
+
+    @Test
+    public void updateSongTitleTest() {
+        journal.addEntry(e1);
+        journal.addEntry(e2);
+        journal.addEntry(e3);
+
+        journal.updateSongTitle("Heather", "Never Ending Song");
+        assertEquals("Never Ending Song", e1.getSongName());
+
+        // Others remain unchanged
+        assertEquals("good 4 u", e2.getSongName());
+        assertEquals("Vampire", e3.getSongName());
+    }
+
+    @Test
+    public void updateSongArtistTest() {
+        journal.addEntry(e1);
+        journal.addEntry(e2);
+        journal.addEntry(e3);
+
+        journal.updateSongArtist("Olivia Rodrigo", "Taylor Swift");
+
+        // Only e2 and e3 updated
+        assertEquals("Conan Gray", e1.getSongArtist());
+        assertEquals("Taylor Swift", e2.getSongArtist());
+        assertEquals("Taylor Swift", e3.getSongArtist());
+    }
+
+    @Test
+    public void updateDateTest() {
+        journal.addEntry(e1);
+        journal.addEntry(e2);
+        journal.addEntry(e3);
+
+        LocalDate newDate = LocalDate.of(2025, 12, 25);
+        journal.updateDate(LocalDate.of(2025, 5, 14), newDate);
+
+        // Only e1 and e2 updated
+        assertEquals(newDate, e1.getDate());
+        assertEquals(newDate, e2.getDate());
+        assertEquals(LocalDate.of(2025, 6, 18), e3.getDate());
+    }
+
+    @Test
+    public void updateMoodTest() {
+        journal.addEntry(e1);
+        journal.addEntry(e2);
+        journal.addEntry(e3);
+
+        journal.updateMood(Mood.SAD, Mood.HAPPY);
+
+        // e1 and e3 moods updated
+        assertEquals(Mood.HAPPY, e1.getMood());
+        assertEquals(Mood.ANGRY, e2.getMood());
+        assertEquals(Mood.HAPPY, e3.getMood());
+    }
 }
