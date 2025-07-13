@@ -27,7 +27,11 @@ public class Entry {
     // EFFECTS: creates a journal entry with a date and a song title;
     //          account id is a positive integer not assigned to any other account;
     public Entry(String songTitle, String songArtist, LocalDate date, Mood mood) {
-        // stub
+        this.id = nextEntryId++;
+        this.songTitle = songTitle;
+        this.songArtist = songArtist;
+        this.date = date;
+        this.mood = mood;
     }
 
 
@@ -38,7 +42,9 @@ public class Entry {
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songTitle
     public void updateSongTitle(int id, String songTitle) {
-        // stub
+        if (this.id == id) {
+            this.songTitle = songTitle;
+        }
     }
 
 
@@ -46,21 +52,27 @@ public class Entry {
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songArtist
     public void updateSongArtist(int id, String songArtist) {
-        // stub
+        if (this.id == id) {
+            this.songArtist = songArtist;
+        }
     }
 
     // REQUIRES: date cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new date
     public void updateDate(int id, LocalDate date) {
-        // stub
+        if (this.id == id) {
+            this.date = date;
+        }
     }
 
     // REQUIRES: mood cannot be null
     // MODIFIES: this
     // EFFECTS: updates the entry with the new mood
     public void updateMood(int id, Mood mood) {
-        // stub
+        if (this.id == id) {
+            this.mood = mood;
+        }
     }
 
 
@@ -68,33 +80,39 @@ public class Entry {
 
     // EFFECTS: returns entry id
     public int getId() {
-        return 0; // stub
+        return id;
     }
 
     // EFFECTS: returns song name of the entry
     public String getSongName() {
-        return null; // stub
+        return songTitle;
     }
 
     // EFFECTS: returns song artist of the entry
     public String getSongArtist() {
-        return null; // stub
+        return songArtist;
     }
 
 
     // EFFECTS: returns date of the entery
     public LocalDate getDate() {
-        return null; // stub
+        return date;
     } 
 
     // EFFECTS: returns mood of the entry
     public String getMood() {
-        return null; // stub
+        return mood.toString();
     }
 
     // EFFECTS: returns the color name corresponding to the mood
     public String getColor() {
-        return null; // stub
+        switch (mood) {
+            case HAPPY: return "Yellow";
+            case SAD: return "Blue";
+            case CALM: return "Green";
+            case ANGRY: return "Red";
+            case EXCITED: return "Orange";
+            default: return "Gray";
+        }
     }
-
 }
