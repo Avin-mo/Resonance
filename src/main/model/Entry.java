@@ -2,30 +2,27 @@ package model;
 
 import java.time.LocalDate;
 
-
-// Represents a single journal entry with a song title, song artist, date, mood, and id
+// Represents a single journal entry with a song title, song artist, date, mood,
+// and id
 public class Entry {
-    private static int nextEntryId = 1;   // tracks id of next account created
-    private int id;                       // entry id
-    private String songTitle;             // entry name or the song title
-    private String songArtist;            // song's artist
-    private LocalDate date;               // date entry
-    private Mood mood;                    // mood entry
+    private static int nextEntryId = 1; // tracks id of next account created
+    private int id; // entry id
+    private String songTitle; // entry name or the song title
+    private String songArtist; // song's artist
+    private LocalDate date; // date entry
+    private Mood mood; // mood entry
 
-
-    // Represents possible moods
     public enum Mood {
-        HAPPY, 
-        SAD, 
-        CALM, 
-        ANGRY, 
+        HAPPY,
+        SAD,
+        CALM,
+        ANGRY,
         EXCITED
     }
 
-
     // REQUIRES: songTitle has a non-zero length
     // EFFECTS: creates a journal entry with a date and a song title;
-    //          account id is a positive integer not assigned to any other account;
+    // account id is a positive integer not assigned to any other account;
     public Entry(String songTitle, String songArtist, LocalDate date, Mood mood) {
         this.id = nextEntryId++;
         this.songTitle = songTitle;
@@ -34,17 +31,12 @@ public class Entry {
         this.mood = mood;
     }
 
-
-
-
-
     // REQUIRES: songTitle has a non-zero length
     // MODIFIES: this
     // EFFECTS: updates the entry with the new songTitle
     public void updateSongTitle(String newSongTitle) {
         this.songTitle = newSongTitle;
     }
-
 
     // REQUIRES: songArtist has a non-zero length
     // MODIFIES: this
@@ -67,9 +59,6 @@ public class Entry {
         this.mood = newMood;
     }
 
-
-
-
     // EFFECTS: returns entry id
     public int getId() {
         return id;
@@ -85,26 +74,31 @@ public class Entry {
         return songArtist;
     }
 
-
     // EFFECTS: returns date of the entery
     public LocalDate getDate() {
         return date;
-    } 
+    }
 
     // EFFECTS: returns mood of the entry
-    public String getMood() {
-        return mood.toString();
+    public Mood getMood() {
+        return mood;
     }
 
     // EFFECTS: returns the color name corresponding to the mood
     public String getColor() {
         switch (mood) {
-            case HAPPY: return "Yellow";
-            case SAD: return "Blue";
-            case CALM: return "Green";
-            case ANGRY: return "Red";
-            case EXCITED: return "Orange";
-            default: return "Gray";
+            case HAPPY:
+                return "Yellow";
+            case SAD:
+                return "Blue";
+            case CALM:
+                return "Green";
+            case ANGRY:
+                return "Red";
+            case EXCITED:
+                return "Orange";
+            default:
+                return "Gray";
         }
     }
 }
