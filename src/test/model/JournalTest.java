@@ -253,4 +253,15 @@ public class JournalTest {
         assertEquals(Mood.ANGRY, e2.getMood());
         assertEquals(Mood.HAPPY, e3.getMood());
     }
+
+    @Test
+    public void getEntryByIdTest() {
+        journal.addEntry(e1);
+        journal.addEntry(e2);
+        journal.addEntry(e3);
+
+        Entry e = journal.getEntryById(e1.getId());
+
+        assertEquals(e, e1);
+    }
 }
