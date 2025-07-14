@@ -56,6 +56,7 @@ public class JournalApp {
         System.out.println("\tr -> remove entry");
         System.out.println("\tu -> update entry");
         System.out.println("\tq -> quit");
+        System.out.print("Select an option: ");
 
     }
 
@@ -221,7 +222,6 @@ public class JournalApp {
     private void updateEntryOption() {
         if (journal.getAllEntries().isEmpty()) {
             System.out.println("Your journal is empty. Nothing to update.");
-            mainMenu();
         } else {
             System.out.println("\nUpdate entries:");
             System.out.println("\tut -> update by song title");
@@ -229,11 +229,9 @@ public class JournalApp {
             System.out.println("\tud -> update by date");
             System.out.println("\tum -> update by mood");
             System.out.print("Select an option: ");
+
+            updateEntry();
         }
-
-        updateEntry();
-
-        System.out.println("Update completed.");
     }
 
 
@@ -280,6 +278,7 @@ public class JournalApp {
             updateEntryOption();
         }
 
+        System.out.println("Update completed.");
     }
 
 
@@ -299,6 +298,8 @@ public class JournalApp {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
         }
+
+        System.out.println("Update completed.");
     }
 
 
@@ -318,6 +319,8 @@ public class JournalApp {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
         }
+
+        System.out.println("Update completed.");
     }
 
 
@@ -339,6 +342,8 @@ public class JournalApp {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
         }
+
+        System.out.println("Update completed.");
     }
 
 
