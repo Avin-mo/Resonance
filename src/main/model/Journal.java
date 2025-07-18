@@ -3,8 +3,13 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a list of enteries 
-public class Journal {
+public class Journal implements Writable {
 
     private ArrayList<Entry> entries;
 
@@ -143,6 +148,19 @@ public class Journal {
                 e.updateMood(newMood);
             }
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("entries", entriesToJson());
+        return json;
+    }
+
+
+    // EFFECTS: returns enteries in the journal as json arrays
+    public JSONArray entriesToJson() {
+        // stub
     }
 
 }
