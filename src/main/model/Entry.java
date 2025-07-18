@@ -2,9 +2,13 @@ package model;
 
 import java.time.LocalDate;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a single journal entry with a song title, song artist, date, mood,
 // and id
-public class Entry {
+public class Entry implements Writable {
     private static int nextEntryId = 1; // tracks id of next account created
     private int id; // entry id
     private String songTitle; // entry name or the song title
@@ -100,5 +104,16 @@ public class Entry {
             default:
                 return "Gray";
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("songTitle", songTitle);
+        json.put("songArtist", songArtist);
+        json.put("date", date);
+        json.put("mood", mood);
+        return json;
     }
 }
