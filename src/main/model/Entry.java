@@ -106,6 +106,7 @@ public class Entry implements Writable {
         }
     }
 
+    // CITATION: part of this code was insipired by CPSC 210 JsonSerializationDemo
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
