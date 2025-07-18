@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+// Represents a list of enteries 
 public class Journal {
 
     private ArrayList<Entry> entries;
