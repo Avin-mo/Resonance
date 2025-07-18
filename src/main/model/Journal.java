@@ -160,7 +160,13 @@ public class Journal implements Writable {
 
     // EFFECTS: returns enteries in the journal as json arrays
     public JSONArray entriesToJson() {
-        // stub
+        JSONArray jsonArray = new JSONArray();
+
+        for (Entry e : entries) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
     }
 
 }
