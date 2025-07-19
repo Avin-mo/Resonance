@@ -2,17 +2,32 @@ package ui;
 
 import model.Entry;
 import model.Journal;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.time.LocalDate;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class JournalApp {
     private Journal journal;
     private Scanner input;
+    // CITATION: usage of the following fields was inspired by CPSC 210 JsonSerializationDemo 
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/journal.json";
+ 
 
     // MODIFIES: this
     // EFFECTS: starts the journal app
-    public JournalApp() {
+    public JournalApp() throws FileNotFoundException  {
+        // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
+        input = new Scanner(System.in);
+        journal = new Journal();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runJournal();
     }
 
@@ -369,14 +384,29 @@ public class JournalApp {
 
     }
 
+
+    // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
     // EFFECTS: saves journal to a file
     private void saveJournal() {
-
+        try {
+            jsonWriter.open();
+            jsonWriter.write(journal);
+            jsonWriter.close();
+            System.out.println("Saved your journal to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
 
+    // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
     // EFFECTS: loads journal from a file
     private void loadJournal() {
-        
+        try {
+            journal = jsonReader.read();
+            System.out.println("Loaded your journal from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }
