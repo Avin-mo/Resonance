@@ -1,12 +1,11 @@
 package persistence;
+
 import model.Journal;
 import org.json.JSONObject;
-
 
 import java.io.*;
 
 // CITATION: parts of this code were taken from CPSC 210 JsonSerializationDemo
-
 // Represents a writer that writes JSON representation of workroom to file
 public class JsonWriter {
     private static final int TAB = 4;
