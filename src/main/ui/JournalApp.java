@@ -55,9 +55,10 @@ public class JournalApp {
         System.out.println("\tv -> view entries");
         System.out.println("\tr -> remove entry");
         System.out.println("\tu -> update entry");
+        System.out.println("\ts -> save journal to a file");
+        System.out.println("\tl -> load journal from a file");
         System.out.println("\tq -> quit");
         System.out.print("Select an option: ");
-
     }
 
 
@@ -72,6 +73,10 @@ public class JournalApp {
             removeEntry();
         } else if (command.equals("u")) {
             updateEntryOption();
+        } else if (command.equals("s")) {
+            saveJournal();
+        } else if (command.equals("l")) {
+            loadJournal();
         } else {
             System.out.println("Selection not valid.");
             mainMenu();
@@ -235,7 +240,6 @@ public class JournalApp {
     }
 
 
-
     // MODIFIES: this
     // EFFECTS: prints all the enteris for the user to see;
     //          updates the entry based on the option selected by the user
@@ -363,5 +367,16 @@ public class JournalApp {
                 + " | Mood: " + e.getMood()
                 + " (" + e.getColor() + ")";
 
+    }
+
+    // EFFECTS: saves journal to a file
+    private void saveJournal() {
+
+    }
+
+
+    // EFFECTS: loads journal from a file
+    private void loadJournal() {
+        
     }
 }
