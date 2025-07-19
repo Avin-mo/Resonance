@@ -28,7 +28,8 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes JSON representation of Journal to file
     public void write(Journal journal) {
-        
+        JSONObject json = journal.toJson();
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this
@@ -40,6 +41,6 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
-        
+        writer.print(json);
     }
 }
