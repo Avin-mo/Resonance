@@ -67,4 +67,73 @@ class JsonWriterTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
+
+    @Test
+    void testWriterJournalWithEmptyFields() {
+        try {
+            Journal journal = new Journal();
+            journal.addEntry(new Entry("", "", LocalDate.now(), Entry.Mood.CALM));
+
+            JsonWriter writer = new JsonWriter("./data/testWriterJournalWithEmptyFields.json");
+            writer.open();
+            writer.write(journal);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterJournalWithEmptyFields.json");
+            journal = reader.read();
+            assertEquals(1, journal.getAllEntries().size());
+            checkEntry("", "", LocalDate.now(), Entry.Mood.CALM, journal.getAllEntries().get(0));
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    void testWriterJournalWithDuplicates() {
+        try {
+            Journal journal = new Journal();
+            Entry entry = new Entry("Song", "Artist", LocalDate.of(2025, 1, 1), Entry.Mood.HAPPY);
+            journal.addEntry(entry);
+            journal.addEntry(entry);
+
+            JsonWriter writer = new JsonWriter("./data/testWriterJournalWithDuplicates.json");
+            writer.open();
+            writer.write(journal);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterJournalWithDuplicates.json");
+            journal = reader.read();
+            assertEquals(2, journal.getAllEntries().size());
+            checkEntry("Song", "Artist", LocalDate.of(2025, 1, 1), Entry.Mood.HAPPY, journal.getAllEntries().get(0));
+            checkEntry("Song", "Artist", LocalDate.of(2025, 1, 1), Entry.Mood.HAPPY, journal.getAllEntries().get(1));
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    void testWriterJournalWithAllMoods() {
+        try {
+            Journal journal = new Journal();
+            for (Entry.Mood mood : Entry.Mood.values()) {
+                journal.addEntry(new Entry("Song", "Artist", LocalDate.now(), mood));
+            }
+
+            JsonWriter writer = new JsonWriter("./data/testWriterJournalWithAllMoods.json");
+            writer.open();
+            writer.write(journal);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterJournalWithAllMoods.json");
+            journal = reader.read();
+            assertEquals(Entry.Mood.values().length, journal.getAllEntries().size());
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+
+
 }
