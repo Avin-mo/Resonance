@@ -18,7 +18,6 @@ class JsonWriterTest extends JsonTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            Journal journal = new Journal();
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -133,7 +132,4 @@ class JsonWriterTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
-
-
-
 }
