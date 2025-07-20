@@ -43,14 +43,32 @@ public class JournalApp {
             command = input.next();
             command = command.toLowerCase();
 
+
             if (command.equals("q")) {
-                keepGoing = false;
+                if (!Journal.saved()) {
+                    Journal.askToSave();
+                } else {
+                    keepGoing = false;
+                }
             } else {
                 executeCommand(command);
             }
         }
 
         System.out.println("Thanks for using Resonance!");
+    }
+
+
+    // EFFECTS: asks the user whether they want to save 
+    private void askToSave() {
+        
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: produces true if the journal has been saved 
+    private boolean isJournalSaved () {
+
     }
 
 
