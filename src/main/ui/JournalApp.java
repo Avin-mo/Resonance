@@ -133,13 +133,29 @@ public class JournalApp {
         System.out.print("Enter artist: ");
         String artist = input.nextLine();
 
-        System.out.print("Enter date (YYYY-MM-DD): ");
-        String dateStr = input.nextLine();
-        LocalDate date = LocalDate.parse(dateStr);
+        LocalDate date = null;
+        while (date == null) {
+            System.out.print("Enter date (YYYY-MM-DD): ");
+            String dateStr = input.nextLine();
+            try {
+                date = LocalDate.parse(dateStr);
+            } catch (Exception e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
 
-        System.out.print("Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
-        String moodStr = input.nextLine();
-        Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
+        }
+
+        Entry.Mood mood = null;
+        while (mood == null) {
+            System.out.print("Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
+            String moodStr = input.nextLine();
+            try {
+                mood = Entry.Mood.valueOf(moodStr.toUpperCase());
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
+            }
+        }
+
 
         Entry entry = new Entry(title, artist, date, mood);
         journal.addEntry(entry);
@@ -214,9 +230,16 @@ public class JournalApp {
 
     // EFFECTS: displays entries filtered by date
     private void filterByDate() {
-        String dateString = prompt("Enter date to search for (YYYY-MM-DD)): ");
-
-        LocalDate date = LocalDate.parse(dateString);
+        LocalDate date = null;
+        while (date == null) {
+            System.out.print("Enter date (YYYY-MM-DD): ");
+            String dateStr = input.nextLine();
+            try {
+                date = LocalDate.parse(dateStr);
+            } catch (Exception e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
+        }
         var matchDate = journal.getEnteriesByDate(date);
 
         System.out.println("\nEntries with date \"" + date + "\":");
@@ -225,11 +248,19 @@ public class JournalApp {
         }
     }
 
+
     // EFFECTS: displays entries filtered by mood
     private void filterByMood() {
-        String moodString = prompt("Enter mood to search for (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
-
-        Entry.Mood mood = Entry.Mood.valueOf(moodString);
+        Entry.Mood mood = null;
+        while (mood == null) {
+            System.out.println("Enter mood to search for (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
+            String moodString = input.nextLine();
+            try {
+                mood = Entry.Mood.valueOf(moodString.toUpperCase());
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
+            }
+        }
         var matchMood = journal.getEnteriesByMood(mood);
 
         System.out.println("\nEntries with mood \"" + mood + "\":");
@@ -363,9 +394,28 @@ public class JournalApp {
         Entry toUpdate = journal.getEntryById(id);
         
         if (toUpdate != null) {
-            LocalDate oldDate = LocalDate.parse(prompt("Enter the current entry date: "));
-            LocalDate newDate = LocalDate.parse(prompt("Enter the new entry date: "));
+            LocalDate oldDate = null;
+            while (oldDate == null) {
+                try {
+                    String oldDateStr = prompt("Enter the current entry date: ");
+                    oldDate = LocalDate.parse(oldDateStr);
+                } catch (Exception e) {
+                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+                }
+            }
+
+            LocalDate newDate = null;
+            while (newDate == null) {
+                try {
+                    String newDateStr = prompt("Enter the new entry date: ");
+                    newDate = LocalDate.parse(newDateStr);
+                } catch (Exception e) {
+                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+                }
+            }
+
             journal.updateDate(oldDate, newDate);
+
         } else {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
@@ -384,11 +434,28 @@ public class JournalApp {
         Entry toUpdate = journal.getEntryById(id);
         
         if (toUpdate != null) {
-            String oldMoodString = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
-            String newMoodString = prompt("Enter the new mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
-            Entry.Mood oldMood = Entry.Mood.valueOf(oldMoodString);
-            Entry.Mood newMood = Entry.Mood.valueOf(newMoodString);
+            Entry.Mood oldMood = null;
+            while (oldMood == null) {
+                try {
+                    String oldMoodStr = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
+                    oldMood = Entry.Mood.valueOf(oldMoodStr.toUpperCase());
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
+                }
+            }
+
+            Entry.Mood newMood = null;
+            while (newMood == null) {
+                try {
+                    String newMoodStr = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
+                    newMood = Entry.Mood.valueOf(newMoodStr.toUpperCase());
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
+                }
+            }
+
             journal.updateMood(oldMood, newMood);
+            
         } else {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
