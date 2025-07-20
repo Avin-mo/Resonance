@@ -17,3 +17,4 @@ I chose this project because music is a big part of my daily life, I’m almost 
 - As a user, I want to be able to filter, list, and view my journal enteires by categories; including song title, artist, mood, and date.
 - As a user, I want to be given the option to save my journal to a choosen file.
 - As a user, I want to be given the option to import my journal from a file.
+- As a user, I want to be reminded to save my journal (if I want to) before closing the app.
