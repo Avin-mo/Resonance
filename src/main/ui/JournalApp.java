@@ -17,6 +17,7 @@ public class JournalApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/journal.json";
+    private boolean journalSaved;
  
 
     // MODIFIES: this
@@ -45,8 +46,8 @@ public class JournalApp {
 
 
             if (command.equals("q")) {
-                if (!Journal.saved()) {
-                    Journal.askToSave();
+                if (!journalSaved) {
+                    askToSave();
                 } else {
                     keepGoing = false;
                 }
@@ -61,14 +62,9 @@ public class JournalApp {
 
     // EFFECTS: asks the user whether they want to save 
     private void askToSave() {
-        
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: produces true if the journal has been saved 
-    private boolean isJournalSaved () {
-
+        System.out.println("\nAre you sure you want to clsoe the app without saving the new changes?");
+        System.out.println("\ty -> yes");
+        System.out.println("\tn -> no");
     }
 
 
@@ -77,6 +73,7 @@ public class JournalApp {
     private void init() {
         journal = new Journal();
         input = new Scanner(System.in);
+        journalSaved = true;
     }
 
 
@@ -135,6 +132,9 @@ public class JournalApp {
 
         Entry entry = new Entry(title, artist, date, mood);
         journal.addEntry(entry);
+
+        journalSaved = false;
+
         System.out.println("Entry added successfully!");
     }
 
@@ -252,6 +252,8 @@ public class JournalApp {
         } else {
             System.out.println("No entry found with ID: " + id);
         }
+
+        journalSaved = false;
     }
 
     // MODIFIES: this
@@ -295,6 +297,8 @@ public class JournalApp {
             System.out.println("Invalid option.");
             updateEntryOption();
         }
+
+        journalSaved = false;
     }
 
 
@@ -413,6 +417,8 @@ public class JournalApp {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+
+        journalSaved = true;
     }
 
 
@@ -425,5 +431,6 @@ public class JournalApp {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+        journalSaved = true;
     }
 }
