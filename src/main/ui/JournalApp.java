@@ -65,6 +65,17 @@ public class JournalApp {
         System.out.println("\nAre you sure you want to clsoe the app without saving the new changes?");
         System.out.println("\ty -> yes");
         System.out.println("\tn -> no");
+        input.nextLine(); // clear leftover newline
+        String choice = input.nextLine();
+
+        if (choice.equals("y")) {
+            saveJournal();
+            System.out.println("Thanks for using Resonance!");
+            System.exit(0);
+        } else {
+            System.out.println("Thanks for using Resonance!");
+            System.exit(0);
+        }
     }
 
 
