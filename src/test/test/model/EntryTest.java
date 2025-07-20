@@ -11,63 +11,63 @@ import model.Entry.Mood;
 import java.time.LocalDate;
 
 public class EntryTest {
-    private Entry e;
+    private Entry testEntry;
 
     @BeforeEach
     public void setup() {
-        e = new Entry("Hello", "Adele", LocalDate.of(2025, 7, 12), Mood.SAD);
+        testEntry = new Entry("Hello", "Adele", LocalDate.of(2025, 7, 12), Mood.SAD);
     }
 
     @Test
     public void constructorTest() {
-        assertEquals(e.getSongName(), "Hello");
-        assertEquals(e.getSongArtist(), "Adele");
-        assertEquals(e.getDate(), LocalDate.of(2025, 7, 12));
-        assertEquals(e.getMood(), Mood.SAD);
-        assertTrue(e.getId() > 0);
+        assertEquals(testEntry.getSongName(), "Hello");
+        assertEquals(testEntry.getSongArtist(), "Adele");
+        assertEquals(testEntry.getDate(), LocalDate.of(2025, 7, 12));
+        assertEquals(testEntry.getMood(), Mood.SAD);
+        assertTrue(testEntry.getId() > 0);
     }
 
     @Test
     public void updateSongTitleTest() {
-        e.updateSongTitle("Skyfall");
-        assertEquals("Skyfall", e.getSongName());
+        testEntry.updateSongTitle("Skyfall");
+        assertEquals("Skyfall", testEntry.getSongName());
     }
 
     @Test
     public void updateSongArtistTest() {
-        e.updateSongArtist("Beyoncé");
-        assertEquals("Beyoncé", e.getSongArtist());
+        testEntry.updateSongArtist("Beyoncé");
+        assertEquals("Beyoncé", testEntry.getSongArtist());
     }
 
     @Test
     public void updateDateTest() {
         LocalDate newDate = LocalDate.of(2025, 7, 13);
-        e.updateDate(newDate);
-        assertEquals(newDate, e.getDate());
+        testEntry.updateDate(newDate);
+        assertEquals(newDate, testEntry.getDate());
     }
 
     @Test
     public void updateMoodTest() {
-        e.updateMood(Mood.HAPPY);
-        assertEquals(Mood.HAPPY, e.getMood());
+        testEntry.updateMood(Mood.HAPPY);
+        assertEquals(Mood.HAPPY, testEntry.getMood());
     }
 
     @Test
     public void getColorTest() {
         // initial mood: SAD
-        assertEquals("Blue", e.getColor());
+        assertEquals("Blue", testEntry.getColor());
 
-        e.updateMood(Mood.HAPPY);
-        assertEquals("Yellow", e.getColor());
+        testEntry.updateMood(Mood.HAPPY);
+        assertEquals("Yellow", testEntry.getColor());
 
-        e.updateMood(Mood.CALM);
-        assertEquals("Green", e.getColor());
+        testEntry.updateMood(Mood.CALM);
+        assertEquals("Green", testEntry.getColor());
 
-        e.updateMood(Mood.ANGRY);
-        assertEquals("Red", e.getColor());
+        testEntry.updateMood(Mood.ANGRY);
+        assertEquals("Red", testEntry.getColor());
 
-        e.updateMood(Mood.EXCITED);
-        assertEquals("Orange", e.getColor());
+        testEntry.updateMood(Mood.EXCITED);
+        assertEquals("Orange", testEntry.getColor());
     }
 
 }
