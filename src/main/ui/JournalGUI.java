@@ -247,6 +247,16 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    private void filterByMood() {
+        String moodStr = JOptionPane.showInputDialog(this, "Enter mood to filter by (HAPPY, SAD, CALM, ANGRY, EXCITED):");
+        try {
+            Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
+            displayFilteredEntries(journal.getEnteriesByMood(mood));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void displayFilteredEntries(java.util.List<Entry> entries) {
         entryListModel.clear();
         for (Entry e : entries) {
