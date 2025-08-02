@@ -114,18 +114,18 @@ public class JournalGUI extends JFrame {
     private void addEntry() {
         String title = JOptionPane.showInputDialog(this, "Enter song title:");
         String artist = JOptionPane.showInputDialog(this, "Enter artist:");
-        String moodStr = JOptionPane.showInputDialog(this, "Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED):");
         String dateStr = JOptionPane.showInputDialog(this, "Enter date (YYYY-MM-DD):");
+        String moodStr = JOptionPane.showInputDialog(this, "Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED):");
 
         try {
-            Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
             LocalDate date = LocalDate.parse(dateStr);
+            Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
             Entry entry = new Entry(title, artist, date, mood);
             journal.addEntry(entry);
-            entryListModel.addElement(formatEntry(entry));
             journalSaved = false;
+            refreshList();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid input. Entry not added.");
+            JOptionPane.showMessageDialog(this, "Invalid input. Entry not added.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -134,67 +134,27 @@ public class JournalGUI extends JFrame {
         if (index != -1) {
             Entry toRemove = journal.getAllEntries().get(index);
             journal.removeEntry(toRemove);
-            entryListModel.remove(index);
             journalSaved = false;
+            refreshList();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an entry to remove.", "No selection", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     private void updateEntryTitle() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry selected = journal.getAllEntries().get(index);
-            String newTitle = JOptionPane.showInputDialog(this, "Enter new song title:");
-            if (newTitle != null) {
-                journal.updateSongTitle(selected.getSongName(), newTitle);
-                refreshList();
-                journalSaved = false;
-            }
-        }
+        // stub
     }
 
     private void updateEntryArtist() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry selected = journal.getAllEntries().get(index);
-            String newArtist = JOptionPane.showInputDialog(this, "Enter new artist:");
-            if (newArtist != null) {
-                journal.updateSongArtist(selected.getSongArtist(), newArtist);
-                refreshList();
-                journalSaved = false;
-            }
-        }
+        // stub
     }
 
     private void updateEntryDate() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry selected = journal.getAllEntries().get(index);
-            String dateStr = JOptionPane.showInputDialog(this, "Enter new date (YYYY-MM-DD):");
-            try {
-                LocalDate newDate = LocalDate.parse(dateStr);
-                journal.updateDate(selected.getDate(), newDate);
-                refreshList();
-                journalSaved = false;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid date format.");
-            }
-        }
+        // stub
     }
 
     private void updateEntryMood() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry selected = journal.getAllEntries().get(index);
-            String moodStr = JOptionPane.showInputDialog(this, "Enter new mood (HAPPY, SAD, CALM, ANGRY, EXCITED):");
-            try {
-                Entry.Mood newMood = Entry.Mood.valueOf(moodStr.toUpperCase());
-                journal.updateMood(selected.getMood(), newMood);
-                refreshList();
-                journalSaved = false;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid mood.");
-            }
-        }
+        // stub
     }
 
     private void saveJournal() {
@@ -202,21 +162,21 @@ public class JournalGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(journal);
             jsonWriter.close();
-            JOptionPane.showMessageDialog(this, "Journal saved to " + JSON_STORE);
             journalSaved = true;
+            JOptionPane.showMessageDialog(this, "Journal saved successfully.");
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Unable to save file.");
+            JOptionPane.showMessageDialog(this, "Unable to write to file.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void loadJournal() {
         try {
             journal = jsonReader.read();
-            refreshList();
-            JOptionPane.showMessageDialog(this, "Journal loaded from " + JSON_STORE);
             journalSaved = true;
+            refreshList();
+            JOptionPane.showMessageDialog(this, "Journal loaded successfully.");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Unable to read from file.");
+            JOptionPane.showMessageDialog(this, "Unable to read from file.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
