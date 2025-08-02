@@ -158,8 +158,21 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    // MODIFEIS: this
+    // EFFECTS: updates an entry's artist
     private void updateEntryArtist() {
-        // stub
+        int index = entryJList.getSelectedIndex();
+        if (index != -1) {
+            Entry entry = journal.getAllEntries().get(index);
+            String newArtist = JOptionPane.showInputDialog(this, "Enter new artist:", entry.getSongArtist());
+            if (newArtist != null && !newArtist.isBlank()) {
+                entry.updateSongArtist(newArtist);
+                journalSaved = false;
+                refreshList();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void updateEntryDate() {
