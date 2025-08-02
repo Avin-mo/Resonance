@@ -175,10 +175,28 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    // MODIFEIS: this
+    // EFFECTS: updates an entry's date
     private void updateEntryDate() {
-        // stub
+        int index = entryJList.getSelectedIndex();
+        if (index != -1) {
+            Entry entry = journal.getAllEntries().get(index);
+            String newDateStr = JOptionPane.showInputDialog(this, "Enter new date (YYYY-MM-DD):", entry.getDate().toString());
+            try {
+                LocalDate newDate = LocalDate.parse(newDateStr);
+                entry.updateDate(newDate);
+                journalSaved = false;
+                refreshList();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid date format.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
+    // MODIFEIS: this
+    // EFFECTS: updates an entry's modd
     private void updateEntryMood() {
         // stub
     }
