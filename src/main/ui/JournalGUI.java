@@ -237,6 +237,15 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    private void filterByDate() {
+        String dateStr = JOptionPane.showInputDialog(this, "Enter date to filter by (YYYY-MM-DD):");
+        try {
+            LocalDate date = LocalDate.parse(dateStr);
+            displayFilteredEntries(journal.getEnteriesByDate(date));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid date.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void displayFilteredEntries(java.util.List<Entry> entries) {
         entryListModel.clear();
