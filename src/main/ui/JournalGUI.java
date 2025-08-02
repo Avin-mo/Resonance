@@ -223,7 +223,12 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
+    private void filterByTitle() {
+        String title = JOptionPane.showInputDialog(this, "Enter song title to filter by:");
+        if (title != null) {
+            displayFilteredEntries(journal.getEnteriesBySongTitle(title));
+        }
+    }
 
     private void displayFilteredEntries(java.util.List<Entry> entries) {
         entryListModel.clear();
