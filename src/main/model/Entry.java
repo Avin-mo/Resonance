@@ -88,24 +88,6 @@ public class Entry implements Writable {
         return mood;
     }
 
-    // EFFECTS: returns the color name corresponding to the mood
-    public String getColor() {
-        switch (mood) {
-            case HAPPY:
-                return "Yellow";
-            case SAD:
-                return "Blue";
-            case CALM:
-                return "Green";
-            case ANGRY:
-                return "Red";
-            case EXCITED:
-                return "Orange";
-            default:
-                return "Gray";
-        }
-    }
-
     // CITATION: part of this code was insipired by CPSC 210 JsonSerializationDemo
     @Override
     public JSONObject toJson() {

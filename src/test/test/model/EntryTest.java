@@ -51,23 +51,4 @@ public class EntryTest {
         testEntry.updateMood(Mood.HAPPY);
         assertEquals(Mood.HAPPY, testEntry.getMood());
     }
-
-    @Test
-    public void getColorTest() {
-        // initial mood: SAD
-        assertEquals("Blue", testEntry.getColor());
-
-        testEntry.updateMood(Mood.HAPPY);
-        assertEquals("Yellow", testEntry.getColor());
-
-        testEntry.updateMood(Mood.CALM);
-        assertEquals("Green", testEntry.getColor());
-
-        testEntry.updateMood(Mood.ANGRY);
-        assertEquals("Red", testEntry.getColor());
-
-        testEntry.updateMood(Mood.EXCITED);
-        assertEquals("Orange", testEntry.getColor());
-    }
-
 }

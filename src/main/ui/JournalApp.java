@@ -478,8 +478,7 @@ public class JournalApp {
                 + " | \"" + e.getSongName() + "\""
                 + " by " + e.getSongArtist()
                 + " on " + e.getDate()
-                + " | Mood: " + e.getMood()
-                + " (" + e.getColor() + ")";
+                + " | Mood: " + e.getMood();
 
     }
 
