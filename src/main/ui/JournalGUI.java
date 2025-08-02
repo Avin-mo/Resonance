@@ -141,8 +141,21 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    // MODIFEIS: this
+    // EFFECTS: updates an entry's title
     private void updateEntryTitle() {
-        // stub
+        int index = entryJList.getSelectedIndex();
+        if (index != -1) {
+            Entry entry = journal.getAllEntries().get(index);
+            String newTitle = JOptionPane.showInputDialog(this, "Enter new title:", entry.getSongName());
+            if (newTitle != null && !newTitle.isBlank()) {
+                entry.updateSongTitle(newTitle);
+                journalSaved = false;
+                refreshList();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void updateEntryArtist() {
