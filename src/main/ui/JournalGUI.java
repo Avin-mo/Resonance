@@ -230,6 +230,14 @@ public class JournalGUI extends JFrame {
         }
     }
 
+    private void filterByArtist() {
+        String artist = JOptionPane.showInputDialog(this, "Enter artist to filter by:");
+        if (artist != null) {
+            displayFilteredEntries(journal.getEnteriesBySongArtist(artist));
+        }
+    }
+
+
     private void displayFilteredEntries(java.util.List<Entry> entries) {
         entryListModel.clear();
         for (Entry e : entries) {
