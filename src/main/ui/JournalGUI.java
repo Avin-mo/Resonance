@@ -198,7 +198,21 @@ public class JournalGUI extends JFrame {
     // MODIFEIS: this
     // EFFECTS: updates an entry's modd
     private void updateEntryMood() {
-        // stub
+        int index = entryJList.getSelectedIndex();
+        if (index != -1) {
+            Entry entry = journal.getAllEntries().get(index);
+            String newMoodStr = JOptionPane.showInputDialog(this, "Enter new mood (HAPPY, SAD, CALM, ANGRY, EXCITED):", entry.getMood().toString());
+            try {
+                Entry.Mood newMood = Entry.Mood.valueOf(newMoodStr.toUpperCase());
+                entry.updateMood(newMood);
+                journalSaved = false;
+                refreshList();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void saveJournal() {
