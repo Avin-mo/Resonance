@@ -51,7 +51,7 @@ public class JournalGUI extends JFrame {
         entryJList = new JList<>(entryListModel);
         JScrollPane scrollPane = new JScrollPane(entryJList);
 
-        JPanel buttons = new JPanel(new GridLayout(5, 2));
+        JPanel buttons = new JPanel(new GridLayout(6, 2));
         JButton addBtn = new JButton("Add Entry");
         addBtn.addActionListener(e -> addEntry());
 
@@ -70,8 +70,20 @@ public class JournalGUI extends JFrame {
         JButton updateMoodBtn = new JButton("Update Mood");
         updateMoodBtn.addActionListener(e -> updateEntryMood());
 
-        JButton viewBtn = new JButton("View Entries");
-        viewBtn.addActionListener(e -> refreshList());
+        JButton viewAllBtn = new JButton("View All");
+        viewAllBtn.addActionListener(e -> refreshList());
+
+        JButton viewByTitle = new JButton("Filter by Title");
+        viewByTitle.addActionListener(e -> filterByTitle());
+
+        JButton viewByArtist = new JButton("Filter by Artist");
+        viewByArtist.addActionListener(e -> filterByArtist());
+
+        JButton viewByDate = new JButton("Filter by Date");
+        viewByDate.addActionListener(e -> filterByDate());
+
+        JButton viewByMood = new JButton("Filter by Mood");
+        viewByMood.addActionListener(e -> filterByMood());
 
         JButton saveBtn = new JButton("Save Journal");
         saveBtn.addActionListener(e -> saveJournal());
@@ -85,7 +97,11 @@ public class JournalGUI extends JFrame {
         buttons.add(updateArtistBtn);
         buttons.add(updateDateBtn);
         buttons.add(updateMoodBtn);
-        buttons.add(viewBtn);
+        buttons.add(viewAllBtn);
+        buttons.add(viewByTitle);
+        buttons.add(viewByArtist);
+        buttons.add(viewByDate);
+        buttons.add(viewByMood);
         buttons.add(saveBtn);
         buttons.add(loadBtn);
 
@@ -141,8 +157,6 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // MODIFEIS: this
-    // EFFECTS: updates an entry's title
     private void updateEntryTitle() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -158,8 +172,6 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // MODIFEIS: this
-    // EFFECTS: updates an entry's artist
     private void updateEntryArtist() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -175,8 +187,6 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // MODIFEIS: this
-    // EFFECTS: updates an entry's date
     private void updateEntryDate() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -195,8 +205,6 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // MODIFEIS: this
-    // EFFECTS: updates an entry's modd
     private void updateEntryMood() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -212,6 +220,15 @@ public class JournalGUI extends JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+
+
+    private void displayFilteredEntries(java.util.List<Entry> entries) {
+        entryListModel.clear();
+        for (Entry e : entries) {
+            entryListModel.addElement(formatEntry(e));
         }
     }
 
