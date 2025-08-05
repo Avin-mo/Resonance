@@ -38,3 +38,14 @@ I chose this project because music is a big part of my daily life, I’m almost 
 - You can "filter and view" a list of entries with the same song name by clicking "Filter by Date" button at the bottom of the application window and entering the desired date.
 - You can "filter and view" a list of entries with the same song name by clicking "Filter by Mood" button at the bottom of the application window and entering the desired mood.
 - After every filtering, you can "view" the list of all of your enteries by clicking "View All" button at the bottom of the application window.
+
+### Phase 4: Task 2
+Tue Aug 05 14:37:48 PDT 2025 → Added entry (ID: 1) - "aaa" by ccccc, Date: 2020-04-05, Mood: HAPPY
+Tue Aug 05 14:37:48 PDT 2025 → Added entry (ID: 2) - "Heather" by Conan Gray, Date: 2025-04-03, Mood: ANGRY
+Tue Aug 05 14:37:48 PDT 2025 → Viewed all entries (2 total)
+Tue Aug 05 14:38:15 PDT 2025 → Added entry (ID: 3) - "Love Story" by Taylor Swift, Date: 2025-04-06, Mood: HAPPY
+Tue Aug 05 14:38:15 PDT 2025 → Viewed all entries (3 total)
+Tue Aug 05 14:38:20 PDT 2025 → Viewed all entries (3 total)
+Tue Aug 05 14:38:25 PDT 2025 → Viewed all entries (3 total)
+Tue Aug 05 14:38:33 PDT 2025 → Filtered entries by mood: HAPPY (2 match(es))
+Tue Aug 05 14:38:35 PDT 2025 → Viewed all entries (3 total)

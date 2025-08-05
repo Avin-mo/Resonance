@@ -1,5 +1,6 @@
 package ui;
 
+
 import model.Entry;
 import model.Journal;
 import persistence.JsonReader;
@@ -113,8 +114,20 @@ public class JournalGUI extends JFrame {
                 saveJournal();
             }
         }
+        printEventLog();
         dispose();
     }
+
+    // REQUIRES: EventLog has been populated with events during the program's
+    // execution
+    // MODIFIES: none
+    // EFFECTS: prints all events in the EventLog to the console in the order they
+    // were logged
+    private void printEventLog() {
+        for (model.Event e : model.EventLog.getInstance()) {
+            System.out.println(e.getDate() + " → " + e.getDescription());
+        }
+    }    
 
     // REQUIRES: valid user input through dialogs for title, artist, date, and mood
     // MODIFIES: this, journal

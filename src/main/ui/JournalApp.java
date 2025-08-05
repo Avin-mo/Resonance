@@ -57,7 +57,21 @@ public class JournalApp {
         }
 
         System.out.println("Thanks for using Resonance!");
+
+        printEventLog();
     }
+
+    // REQUIRES: EventLog has been populated with events during the program's
+    // execution
+    // MODIFIES: none
+    // EFFECTS: prints all events in the EventLog to the console in the order they
+    // were logged
+    private void printEventLog() {
+        for (model.Event e : model.EventLog.getInstance()) {
+            System.out.println(e.getDate() + " → " + e.getDescription());
+        }
+    }
+    
 
     // EFFECTS: asks the user whether they want to save
     private void askToSave() {

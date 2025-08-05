@@ -16,7 +16,7 @@ public class Journal implements Writable {
     // MODIFIES: this
     // EFFECTS: creates an empty list of enteries
     public Journal() {
-        entries = new ArrayList<>(); // stub
+        entries = new ArrayList<>();
     }
 
     // REQURIES: entry is not null
@@ -24,6 +24,11 @@ public class Journal implements Writable {
     // EFFECTS: adds the given entry to the journal
     public void addEntry(Entry entry) {
         entries.add(entry);
+        EventLog.getInstance().logEvent(new Event(
+            "Added entry (ID: " + entry.getId() + ") - \"" +
+            entry.getSongName() + "\" by " + entry.getSongArtist() +
+            ", Date: " + entry.getDate() + ", Mood: " + entry.getMood()
+        ));
     }
 
     // REQURIES: entry is not null
@@ -31,10 +36,17 @@ public class Journal implements Writable {
     // EFFECTS: removes the given entry to the journal
     public void removeEntry(Entry entry) {
         entries.remove(entry);
+        EventLog.getInstance().logEvent(new Event(
+            "Removed entry (ID: " + entry.getId() + ") - \"" +
+            entry.getSongName() + "\" by " + entry.getSongArtist()
+        ));
     }
 
     // EFFECTS: returns a list of all entries; list may be empty
     public ArrayList<Entry> getAllEntries() {
+        EventLog.getInstance().logEvent(new Event(
+            "Viewed all entries (" + entries.size() + " total)"
+        ));
         return new ArrayList<>(entries);
     }
 
@@ -48,6 +60,9 @@ public class Journal implements Writable {
                 result.add(e);
             }
         }
+        EventLog.getInstance().logEvent(new Event(
+            "Filtered entries by date: " + date + " (" + result.size() + " match(es))"
+        ));
         return result;
     }
 
@@ -61,6 +76,9 @@ public class Journal implements Writable {
                 result.add(e);
             }
         }
+        EventLog.getInstance().logEvent(new Event(
+            "Filtered entries by mood: " + mood + " (" + result.size() + " match(es))"
+        ));
         return result;
     }
 
@@ -74,6 +92,9 @@ public class Journal implements Writable {
                 result.add(e);
             }
         }
+        EventLog.getInstance().logEvent(new Event(
+            "Filtered entries by song title: \"" + songTitle + "\" (" + result.size() + " match(es))"
+        ));
         return result;
     }
 
@@ -87,18 +108,26 @@ public class Journal implements Writable {
                 result.add(e);
             }
         }
+        EventLog.getInstance().logEvent(new Event(
+            "Filtered entries by artist: \"" + songArtist + "\" (" + result.size() + " match(es))"
+        ));
         return result;
     }
-
 
     // REQUIRES: id is not null
     // EFFECTS: returns the Entry with the given id, or null if not found
     public Entry getEntryById(int id) {
         for (Entry e : entries) {
             if (e.getId() == id) {
+                EventLog.getInstance().logEvent(new Event(
+                    "Retrieved entry by ID: " + id + " → \"" + e.getSongName() + "\" by " + e.getSongArtist()
+                ));
                 return e;
             }
         }
+        EventLog.getInstance().logEvent(new Event(
+            "Attempted to retrieve entry by ID: " + id + " → Not found"
+        ));
         return null;
     }
 
@@ -110,6 +139,10 @@ public class Journal implements Writable {
         for (Entry e : entries) {
             if (e.getSongName().equalsIgnoreCase(oldSongTitle)) {
                 e.updateSongTitle(newSongTitle);
+                EventLog.getInstance().logEvent(new Event(
+                    "Updated title for entry (ID: " + e.getId() + ") - from \"" +
+                    oldSongTitle + "\" to \"" + newSongTitle + "\""
+                ));
             }
         }
     }
@@ -122,6 +155,10 @@ public class Journal implements Writable {
         for (Entry e : entries) {
             if (e.getSongArtist().equalsIgnoreCase(oldSongArtist)) {
                 e.updateSongArtist(newSongArtist);
+                EventLog.getInstance().logEvent(new Event(
+                    "Updated artist for entry (ID: " + e.getId() + ") - from \"" +
+                    oldSongArtist + "\" to \"" + newSongArtist + "\""
+                ));
             }
         }
     }
@@ -134,6 +171,10 @@ public class Journal implements Writable {
         for (Entry e : entries) {
             if (e.getDate().equals(oldDate)) {
                 e.updateDate(newDate);
+                EventLog.getInstance().logEvent(new Event(
+                    "Updated date for entry (ID: " + e.getId() + ") - from " +
+                    oldDate + " to " + newDate
+                ));
             }
         }
     }
@@ -146,10 +187,13 @@ public class Journal implements Writable {
         for (Entry e : entries) {
             if (e.getMood() == oldMood) {
                 e.updateMood(newMood);
+                EventLog.getInstance().logEvent(new Event(
+                    "Updated mood for entry (ID: " + e.getId() + ") - from " +
+                    oldMood + " to " + newMood
+                ));
             }
         }
     }
-
 
     // CITATION: part of this code was insipired by CPSC 210 JsonSerializationDemo
     @Override
@@ -158,7 +202,6 @@ public class Journal implements Writable {
         json.put("entries", entriesToJson());
         return json;
     }
-
 
     // EFFECTS: returns enteries in the journal as json arrays
     public JSONArray entriesToJson() {
