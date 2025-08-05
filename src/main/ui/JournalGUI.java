@@ -22,8 +22,9 @@ public class JournalGUI extends JFrame {
     private DefaultListModel<String> entryListModel;
     private JList<String> entryJList;
 
-    // EFFECTS: constructs the GUI window, initializes components, loads journal into memory, 
-    //          and sets up the window closing behavior.
+    // EFFECTS: constructs the GUI window, initializes components, loads journal
+    // into memory,
+    // and sets up the window closing behavior.
     public JournalGUI() {
         super("Resonance - Music Mood Journal");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -45,70 +46,28 @@ public class JournalGUI extends JFrame {
         setVisible(true);
     }
 
+    // REQUIRES: label is not null or empty, action is not null
+    // EFFECTS: creates a JButton with the given label and associates it with the
+    // provided action.
+    // When the button is clicked, the action is executed.
+    private JButton createButton(String label, Runnable action) {
+        JButton button = new JButton(label);
+        button.addActionListener(e -> action.run());
+        return button;
+    }
 
     // MODIFIES: this
-    // EFFECTS: initializes all panels, buttons, and the journal list in the GUI.
+    // EFFECTS: initializes the main panel layout, creates the scrollable journal
+    // list,
+    // and adds the button panel to the frame.
     private void initializePanels() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout());
 
         entryListModel = new DefaultListModel<>();
         entryJList = new JList<>(entryListModel);
         JScrollPane scrollPane = new JScrollPane(entryJList);
 
-        JPanel buttons = new JPanel(new GridLayout(6, 2));
-        JButton addBtn = new JButton("Add Entry");
-        addBtn.addActionListener(e -> addEntry());
-
-        JButton removeBtn = new JButton("Remove Entry");
-        removeBtn.addActionListener(e -> removeEntry());
-
-        JButton updateTitleBtn = new JButton("Update Title");
-        updateTitleBtn.addActionListener(e -> updateEntryTitle());
-
-        JButton updateArtistBtn = new JButton("Update Artist");
-        updateArtistBtn.addActionListener(e -> updateEntryArtist());
-
-        JButton updateDateBtn = new JButton("Update Date");
-        updateDateBtn.addActionListener(e -> updateEntryDate());
-
-        JButton updateMoodBtn = new JButton("Update Mood");
-        updateMoodBtn.addActionListener(e -> updateEntryMood());
-
-        JButton viewAllBtn = new JButton("View All");
-        viewAllBtn.addActionListener(e -> refreshList());
-
-        JButton viewByTitle = new JButton("Filter by Title");
-        viewByTitle.addActionListener(e -> filterByTitle());
-
-        JButton viewByArtist = new JButton("Filter by Artist");
-        viewByArtist.addActionListener(e -> filterByArtist());
-
-        JButton viewByDate = new JButton("Filter by Date");
-        viewByDate.addActionListener(e -> filterByDate());
-
-        JButton viewByMood = new JButton("Filter by Mood");
-        viewByMood.addActionListener(e -> filterByMood());
-
-        JButton saveBtn = new JButton("Save Journal");
-        saveBtn.addActionListener(e -> saveJournal());
-
-        JButton loadBtn = new JButton("Load Journal");
-        loadBtn.addActionListener(e -> loadJournal());
-
-        buttons.add(addBtn);
-        buttons.add(removeBtn);
-        buttons.add(updateTitleBtn);
-        buttons.add(updateArtistBtn);
-        buttons.add(updateDateBtn);
-        buttons.add(updateMoodBtn);
-        buttons.add(viewAllBtn);
-        buttons.add(viewByTitle);
-        buttons.add(viewByArtist);
-        buttons.add(viewByDate);
-        buttons.add(viewByMood);
-        buttons.add(saveBtn);
-        buttons.add(loadBtn);
+        JPanel buttons = createButtonPanel();
 
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.add(buttons, BorderLayout.SOUTH);
@@ -116,10 +75,31 @@ public class JournalGUI extends JFrame {
         add(panel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and returns a panel containing all functional buttons for
+    // the GUI.
+    // Each button is labeled and connected to its corresponding action.
+    private JPanel createButtonPanel() {
+        JPanel buttons = new JPanel(new GridLayout(6, 2));
+        buttons.add(createButton("Add Entry", this::addEntry));
+        buttons.add(createButton("Remove Entry", this::removeEntry));
+        buttons.add(createButton("Update Title", this::updateEntryTitle));
+        buttons.add(createButton("Update Artist", this::updateEntryArtist));
+        buttons.add(createButton("Update Date", this::updateEntryDate));
+        buttons.add(createButton("Update Mood", this::updateEntryMood));
+        buttons.add(createButton("View All", this::refreshList));
+        buttons.add(createButton("Filter by Title", this::filterByTitle));
+        buttons.add(createButton("Filter by Artist", this::filterByArtist));
+        buttons.add(createButton("Filter by Date", this::filterByDate));
+        buttons.add(createButton("Filter by Mood", this::filterByMood));
+        buttons.add(createButton("Save Journal", this::saveJournal));
+        buttons.add(createButton("Load Journal", this::loadJournal));
+        return buttons;
+    }
 
     // MODIFIES: this
     // EFFECTS: if journal is unsaved, prompts the user to optionally save changes;
-    //          exits the application unless cancelled.
+    // exits the application unless cancelled.
     private void handleExit() {
         if (!journalSaved) {
             int option = JOptionPane.showConfirmDialog(this,
@@ -136,10 +116,10 @@ public class JournalGUI extends JFrame {
         dispose();
     }
 
-
     // REQUIRES: valid user input through dialogs for title, artist, date, and mood
     // MODIFIES: this, journal
-    // EFFECTS: adds a new entry to the journal and updates the display; shows error if input is invalid
+    // EFFECTS: adds a new entry to the journal and updates the display; shows error
+    // if input is invalid
     private void addEntry() {
         String title = JOptionPane.showInputDialog(this, "Enter song title:");
         String artist = JOptionPane.showInputDialog(this, "Enter artist:");
@@ -158,11 +138,10 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
     // REQUIRES: a journal entry to be selected
     // MODIFIES: this, journal
-    // EFFECTS: removes the selected entry from the journal and updates the display; 
-    //           shows warning if no entry is selected
+    // EFFECTS: removes the selected entry from the journal and updates the display;
+    // shows warning if no entry is selected
     private void removeEntry() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -171,15 +150,15 @@ public class JournalGUI extends JFrame {
             journalSaved = false;
             refreshList();
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to remove.", "No selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an entry to remove.", "No selection",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
-
-
     // REQUIRES: a journal entry to be selected and a valid new title input
     // MODIFIES: this, journal
-    // EFFECTS: updates the title of the selected entry; shows warning if no entry is selected
+    // EFFECTS: updates the title of the selected entry; shows warning if no entry
+    // is selected
     private void updateEntryTitle() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -191,14 +170,16 @@ public class JournalGUI extends JFrame {
                 refreshList();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane
+                    .showMessageDialog(this, "Please select an entry to update.", "No selection",
+                            JOptionPane.WARNING_MESSAGE);
         }
     }
 
-
     // REQUIRES: a journal entry to be selected and a valid new artist input
     // MODIFIES: this, journal
-    // EFFECTS: updates the artist of the selected entry; shows warning if no entry is selected
+    // EFFECTS: updates the artist of the selected entry; shows warning if no entry
+    // is selected
     private void updateEntryArtist() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
@@ -210,19 +191,22 @@ public class JournalGUI extends JFrame {
                 refreshList();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane
+                    .showMessageDialog(this, "Please select an entry to update.", "No selection",
+                            JOptionPane.WARNING_MESSAGE);
         }
     }
 
-
     // REQUIRES: a journal entry to be selected and a valid new date input
     // MODIFIES: this, journal
-    // EFFECTS: updates the date of the selected entry; shows warning if no entry is selected
+    // EFFECTS: updates the date of the selected entry; shows warning if no entry is
+    // selected
     private void updateEntryDate() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
             Entry entry = journal.getAllEntries().get(index);
-            String newDateStr = JOptionPane.showInputDialog(this, "Enter new date (YYYY-MM-DD):", entry.getDate().toString());
+            String newDateStr = JOptionPane.showInputDialog(this, "Enter new date (YYYY-MM-DD):",
+                    entry.getDate().toString());
             try {
                 LocalDate newDate = LocalDate.parse(newDateStr);
                 entry.updateDate(newDate);
@@ -232,19 +216,21 @@ public class JournalGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid date format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
-
     // REQUIRES: a journal entry to be selected and a valid new mood input
     // MODIFIES: this, journal
-    // EFFECTS: updates the mood of the selected entry; shows warning if no entry is selected
+    // EFFECTS: updates the mood of the selected entry; shows warning if no entry is
+    // selected
     private void updateEntryMood() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
             Entry entry = journal.getAllEntries().get(index);
-            String newMoodStr = JOptionPane.showInputDialog(this, "Enter new mood (HAPPY, SAD, CALM, ANGRY, EXCITED):", entry.getMood().toString());
+            String newMoodStr = JOptionPane.showInputDialog(this, "Enter new mood (HAPPY, SAD, CALM, ANGRY, EXCITED):",
+                    entry.getMood().toString());
             try {
                 Entry.Mood newMood = Entry.Mood.valueOf(newMoodStr.toUpperCase());
                 entry.updateMood(newMood);
@@ -254,7 +240,8 @@ public class JournalGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -267,7 +254,6 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
     // MODIFIES: this
     // EFFECTS: filters and displays entries with matching song artist
     private void filterByArtist() {
@@ -276,7 +262,6 @@ public class JournalGUI extends JFrame {
             displayFilteredEntries(journal.getEnteriesBySongArtist(artist));
         }
     }
-
 
     // MODIFIES: this
     // EFFECTS: filters and displays entries with matching date
@@ -293,7 +278,8 @@ public class JournalGUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: filters and displays entries with matching mood
     private void filterByMood() {
-        String moodStr = JOptionPane.showInputDialog(this, "Enter mood to filter by (HAPPY, SAD, CALM, ANGRY, EXCITED):");
+        String moodStr = JOptionPane.showInputDialog(this,
+                "Enter mood to filter by (HAPPY, SAD, CALM, ANGRY, EXCITED):");
         try {
             Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
             displayFilteredEntries(journal.getEnteriesByMood(mood));
@@ -301,7 +287,6 @@ public class JournalGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     // REQUIRES: entries is not null
     // MODIFIES: this
@@ -313,9 +298,9 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
     // MODIFIES: this, file system
-    // EFFECTS: saves journal to file specified by JSON_STORE; shows error if file is not found
+    // EFFECTS: saves journal to file specified by JSON_STORE; shows error if file
+    // is not found
     private void saveJournal() {
         try {
             jsonWriter.open();
@@ -328,9 +313,9 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
     // MODIFIES: this, journal
-    // EFFECTS: loads journal from file specified by JSON_STORE; shows error if file is not readable
+    // EFFECTS: loads journal from file specified by JSON_STORE; shows error if file
+    // is not readable
     private void loadJournal() {
         try {
             journal = jsonReader.read();
@@ -342,9 +327,9 @@ public class JournalGUI extends JFrame {
         }
     }
 
-
     // MODIFIES: this
-    // EFFECTS: updates the displayed entry list with all current entries from the journal
+    // EFFECTS: updates the displayed entry list with all current entries from the
+    // journal
     private void refreshList() {
         entryListModel.clear();
         for (Entry e : journal.getAllEntries()) {
