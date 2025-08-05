@@ -13,17 +13,18 @@ import java.util.Scanner;
 public class JournalApp {
     private Journal journal;
     private Scanner input;
-    // CITATION: usage of the following fields was inspired by CPSC 210 JsonSerializationDemo 
+    // CITATION: usage of the following fields was inspired by CPSC 210
+    // JsonSerializationDemo
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/journal.json";
     private boolean journalSaved;
- 
 
     // MODIFIES: this
     // EFFECTS: starts the journal app
-    public JournalApp() throws FileNotFoundException  {
-        // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
+    public JournalApp() throws FileNotFoundException {
+        // CITATION: the following code was inspired/taken by CPSC 210
+        // JsonSerializationDemo
         input = new Scanner(System.in);
         journal = new Journal();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -44,7 +45,6 @@ public class JournalApp {
             command = input.next();
             command = command.toLowerCase();
 
-
             if (command.equals("q")) {
                 if (!journalSaved) {
                     askToSave();
@@ -59,8 +59,7 @@ public class JournalApp {
         System.out.println("Thanks for using Resonance!");
     }
 
-
-    // EFFECTS: asks the user whether they want to save 
+    // EFFECTS: asks the user whether they want to save
     private void askToSave() {
         System.out.println("\nAre you sure you want to clsoe the app without saving the new changes?");
         System.out.println("\ty -> yes");
@@ -78,7 +77,6 @@ public class JournalApp {
         }
     }
 
-
     // MODIFIES: this
     // EFFECTS: initializes journal
     private void init() {
@@ -86,7 +84,6 @@ public class JournalApp {
         input = new Scanner(System.in);
         journalSaved = true;
     }
-
 
     // EFFECTS: displays the main menu of options for the user
     private void mainMenu() {
@@ -101,9 +98,9 @@ public class JournalApp {
         System.out.print("Select an option: ");
     }
 
-
     // MODIFIES: this
-    // EFFECTS: executes user commands from the main menu; if input not valid returns to mainMenu()
+    // EFFECTS: executes user commands from the main menu; if input not valid
+    // returns to mainMenu()
     private void executeCommand(String command) {
         if (command.equals("a")) {
             addEntry();
@@ -133,21 +130,19 @@ public class JournalApp {
         System.out.print("Enter artist: ");
         String artist = input.nextLine();
 
-        LocalDate date = null;
-        while (date == null) {
-            System.out.print("Enter date (YYYY-MM-DD): ");
-            String dateStr = input.nextLine();
-            try {
-                date = LocalDate.parse(dateStr);
-            } catch (Exception e) {
-                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-            }
+        LocalDate date = promptForDate("Enter date (YYYY-MM-DD): ");
+        Entry.Mood mood = promptForMood("Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
 
-        }
+        journal.addEntry(new Entry(title, artist, date, mood));
+        journalSaved = false;
+        System.out.println("Entry added successfully!");
+    }
 
+    // EFFECTS: prompts user until they enter a valid mood
+    private Entry.Mood promptForMood(String promptMessage) {
         Entry.Mood mood = null;
         while (mood == null) {
-            System.out.print("Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
+            System.out.println(promptMessage);
             String moodStr = input.nextLine();
             try {
                 mood = Entry.Mood.valueOf(moodStr.toUpperCase());
@@ -155,17 +150,24 @@ public class JournalApp {
                 System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
             }
         }
-
-
-        Entry entry = new Entry(title, artist, date, mood);
-        journal.addEntry(entry);
-
-        journalSaved = false;
-
-        System.out.println("Entry added successfully!");
+        return mood;
     }
 
-    
+    // EFFECTS: prompts user until they enter a valid date in YYYY-MM-DD format
+    private LocalDate promptForDate(String promptMessage) {
+        LocalDate date = null;
+        while (date == null) {
+            System.out.print(promptMessage);
+            String dateStr = input.nextLine();
+            try {
+                date = LocalDate.parse(dateStr);
+            } catch (Exception e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
+        }
+        return date;
+    }
+
     // EFFECTS: displays options for entry viewing
     private void viewEntries() {
         System.out.println("\nView entries:");
@@ -248,7 +250,6 @@ public class JournalApp {
         }
     }
 
-
     // EFFECTS: displays entries filtered by mood
     private void filterByMood() {
         Entry.Mood mood = null;
@@ -269,12 +270,10 @@ public class JournalApp {
         }
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: displays entries, then removes entry by ID if found, else prints
-    //          error
-    //          if the journal is empty returns to mainMenu()
+    // error
+    // if the journal is empty returns to mainMenu()
     private void removeEntry() {
         if (journal.getAllEntries().isEmpty()) {
             System.out.println("Your journal is empty. Nothing to remove.");
@@ -299,7 +298,8 @@ public class JournalApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: lets the user select an entry update option; if the journal is empty returns to mainMenu()
+    // EFFECTS: lets the user select an entry update option; if the journal is empty
+    // returns to mainMenu()
     private void updateEntryOption() {
         if (journal.getAllEntries().isEmpty()) {
             System.out.println("Your journal is empty. Nothing to update.");
@@ -315,18 +315,17 @@ public class JournalApp {
         }
     }
 
-
     // MODIFIES: this
     // EFFECTS: prints all the enteris for the user to see;
-    //          updates the entry based on the option selected by the user
-    //          if choice is invalid returns to updateEntryOption();
+    // updates the entry based on the option selected by the user
+    // if choice is invalid returns to updateEntryOption();
     private void updateEntry() {
         System.out.println("\nCurrent Entries:");
         viewAllEntries();
 
         input.nextLine();
         String choice = input.nextLine();
-        
+
         if (choice.equals("ut")) {
             updateTheTitle();
         } else if (choice.equals("ur")) {
@@ -343,9 +342,9 @@ public class JournalApp {
         journalSaved = false;
     }
 
-
     // MODIFIES: this
-    // EFFECTS: updates the song title of the spesified entry; if id not found returns to updateEntryOption(); 
+    // EFFECTS: updates the song title of the spesified entry; if id not found
+    // returns to updateEntryOption();
     private void updateTheTitle() {
         System.out.println("Enter ID of entry to remove: ");
         int id = input.nextInt();
@@ -363,15 +362,15 @@ public class JournalApp {
         System.out.println("Update completed.");
     }
 
-
     // MODIFIES: this
-    // EFFECTS: updates the song artist of the spesified entry; if id nto found returns to updateEntryOption();
+    // EFFECTS: updates the song artist of the spesified entry; if id nto found
+    // returns to updateEntryOption();
     private void updateTheArtist() {
         System.out.println("Enter ID of entry to remove: ");
         int id = input.nextInt();
 
         Entry toUpdate = journal.getEntryById(id);
-        
+
         if (toUpdate != null) {
             String oldArtist = prompt("Enter the current song artist: ");
             String newArtist = prompt("Enter the new song artist: ");
@@ -384,87 +383,43 @@ public class JournalApp {
         System.out.println("Update completed.");
     }
 
-
     // MODIFIES: this
-    // EFFECTS: updates the date of the spesified entry; if id not found returns to updateEntryOption();
+    // EFFECTS: updates the date of the spesified entry; if id not found returns to
+    // updateEntryOption();
     private void updateTheDate() {
         System.out.println("Enter ID of entry to remove: ");
         int id = input.nextInt();
 
         Entry toUpdate = journal.getEntryById(id);
-        
         if (toUpdate != null) {
-            LocalDate oldDate = null;
-            while (oldDate == null) {
-                try {
-                    String oldDateStr = prompt("Enter the current entry date: ");
-                    oldDate = LocalDate.parse(oldDateStr);
-                } catch (Exception e) {
-                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-                }
-            }
-
-            LocalDate newDate = null;
-            while (newDate == null) {
-                try {
-                    String newDateStr = prompt("Enter the new entry date: ");
-                    newDate = LocalDate.parse(newDateStr);
-                } catch (Exception e) {
-                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-                }
-            }
-
+            LocalDate oldDate = promptForDate("Enter the current entry date: ");
+            LocalDate newDate = promptForDate("Enter the new entry date: ");
             journal.updateDate(oldDate, newDate);
-
+            System.out.println("Update completed.");
         } else {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
         }
-
-        System.out.println("Update completed.");
     }
 
-
     // MODIFIES: this
-    // EFFECTS: updates the mood of the spesified entry; if id nto found returns to updateEntryOption();
+    // EFFECTS: updates the mood of the spesified entry; if id nto found returns to
+    // updateEntryOption();
     private void updateTheMood() {
         System.out.println("Enter ID of entry to remove: ");
         int id = input.nextInt();
 
         Entry toUpdate = journal.getEntryById(id);
-        
         if (toUpdate != null) {
-            Entry.Mood oldMood = null;
-            while (oldMood == null) {
-                try {
-                    String oldMoodStr = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
-                    oldMood = Entry.Mood.valueOf(oldMoodStr.toUpperCase());
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
-                }
-            }
-
-            Entry.Mood newMood = null;
-            while (newMood == null) {
-                try {
-                    String newMoodStr = prompt("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ").toUpperCase();
-                    newMood = Entry.Mood.valueOf(newMoodStr.toUpperCase());
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Please enter one of (HAPPY, SAD, CALM, ANGRY, EXCITED).");
-                }
-            }
-
+            Entry.Mood oldMood = promptForMood("Enter the current mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
+            Entry.Mood newMood = promptForMood("Enter the new mood (HAPPY, SAD, CALM, ANGRY, EXCITED): ");
             journal.updateMood(oldMood, newMood);
-            
+            System.out.println("Update completed.");
         } else {
             System.out.println("No entry found with ID: " + id);
             updateEntryOption();
         }
-
-        System.out.println("Update completed.");
     }
-
-
 
     // EFFECTS: prompts user and returns their input
     private String prompt(String message) {
@@ -482,8 +437,8 @@ public class JournalApp {
 
     }
 
-
-    // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
+    // CITATION: the following code was inspired/taken by CPSC 210
+    // JsonSerializationDemo
     // EFFECTS: saves journal to a file
     private void saveJournal() {
         try {
@@ -498,8 +453,8 @@ public class JournalApp {
         journalSaved = true;
     }
 
-
-    // CITATION: the following code was inspired/taken by CPSC 210 JsonSerializationDemo 
+    // CITATION: the following code was inspired/taken by CPSC 210
+    // JsonSerializationDemo
     // EFFECTS: loads journal from a file
     private void loadJournal() {
         try {
