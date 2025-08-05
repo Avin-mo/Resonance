@@ -6,7 +6,7 @@ Each entry records the song, artist, mood, and date, creating a meaningful journ
 
 This app is designed for anyone who enjoys journaling, loves music, treasures memories, or wants to track their life through the lens of the songs they listen to.
 
-I chose this project because music is a big part of my daily life, I’m almost always listening to something, and certain periods of my life are deeply tied to the music I was into at the time. For example, when I think back to summer 2019, the songs I listened to then immediately bring back the mood and memories of that time. Until now, I’ve kept these notes in a generic notes app, but I wanted to create something more intentional and personal, a journal made specifically for preserving memories through music.
+I chose this project because music is a big part of my daily life, I’m almost always listening to something, and certain periods of my life are deeply tied to the music I was into at the time. For example, when I think back to summer 2018, the songs I listened to then immediately bring back the mood and memories of that time. Until now, I’ve kept these notes in a generic notes app, but I wanted to create something more intentional and personal, a journal made specifically for preserving memories through music.
 
 
 ## User Stories
