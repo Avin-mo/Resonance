@@ -9,16 +9,6 @@ Import your listening history and add personal notes to capture memories, though
 This app is designed for anyone who enjoys journaling, loves music, treasures memories, or wants to track their life through the lens of the songs they listen to.
 
 I chose this project because music is a big part of my daily life, I’m almost always listening to something, and certain periods of my life are deeply tied to the music I was into at the time. For example, when I think back to summer 2018, the songs I listened to then immediately bring back the mood and memories of that time. Until now, I’ve kept these notes in a generic notes app, but I wanted to create something more intentional and personal, a journal made specifically for preserving memories through music.
-## User Stories
-
-- As a user, I want to connect my Spotify account to automatically import my listening history.
-- As a user, I want to add personal notes to any song entry to capture memories and thoughts.
-- As a user, I want to view my music diary entries organized by date.
-- As a user, I want to filter my entries by artist to see my listening patterns.
-- As a user, I want to remove entries from my diary if needed.
-- As a user, I want to save my music diary to preserve my memories.
-- As a user, I want to load my previously saved music diary.
-- As a user, I want to be reminded to save my diary before closing the app.
 
 ## Instructions
 
