@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.resonance'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spotify Web API Java wrapper
+    implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.5.0'
+    
+    // JSON processing (you already have this)
+    implementation files('lib/json-20240303.jar')
+    
+    // JUnit for testing
+    testImplementation files('lib/junit-platform-console-standalone-1.10.2.jar')
+}
+
+application {
+    mainClass = 'ui.JournalGUI'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ui.JournalGUI'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+} 

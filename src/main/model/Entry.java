@@ -15,6 +15,8 @@ public class Entry implements Writable {
     private String songArtist; // song's artist
     private LocalDate date; // date entry
     private Mood mood; // mood entry
+    private String notes; // user notes about the song
+    private String spotifyTrackId; // Spotify track ID if from Spotify
 
     public enum Mood {
         HAPPY,
@@ -33,6 +35,21 @@ public class Entry implements Writable {
         this.songArtist = songArtist;
         this.date = date;
         this.mood = mood;
+        this.notes = "";
+        this.spotifyTrackId = null;
+    }
+    
+    // REQUIRES: songTitle has a non-zero length
+    // EFFECTS: creates a journal entry with a date and a song title from Spotify;
+    // account id is a positive integer not assigned to any other account;
+    public Entry(String songTitle, String songArtist, LocalDate date, Mood mood, String spotifyTrackId) {
+        this.id = nextEntryId++;
+        this.songTitle = songTitle;
+        this.songArtist = songArtist;
+        this.date = date;
+        this.mood = mood;
+        this.notes = "";
+        this.spotifyTrackId = spotifyTrackId;
     }
 
     // REQUIRES: songTitle has a non-zero length
@@ -87,6 +104,23 @@ public class Entry implements Writable {
     public Mood getMood() {
         return mood;
     }
+    
+    // EFFECTS: returns notes of the entry
+    public String getNotes() {
+        return notes;
+    }
+    
+    // EFFECTS: returns Spotify track ID of the entry
+    public String getSpotifyTrackId() {
+        return spotifyTrackId;
+    }
+    
+    // REQUIRES: notes is not null
+    // MODIFIES: this
+    // EFFECTS: updates the entry with the new notes
+    public void updateNotes(String newNotes) {
+        this.notes = newNotes;
+    }
 
     // CITATION: part of this code was insipired by CPSC 210 JsonSerializationDemo
     @Override
@@ -97,6 +131,8 @@ public class Entry implements Writable {
         json.put("songArtist", songArtist);
         json.put("date", date);
         json.put("mood", mood);
+        json.put("notes", notes);
+        json.put("spotifyTrackId", spotifyTrackId);
         return json;
     }
 }

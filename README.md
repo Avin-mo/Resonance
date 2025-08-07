@@ -1,8 +1,10 @@
 # Resonance
-### A personal app to log and reflect on your music and mood
+### Your personal music diary
 
-**Resonance** is a desktop application that helps users capture and reflect on their daily listening habits.  
-Each entry records the song, artist, mood, and date, creating a meaningful journal of how music accompanies their lives. Over time, users can browse and search their entries by date, mood, artist, or song. 
+**Resonance** is a desktop application that connects to your Spotify account to create a personal music diary.  
+Import your listening history and add personal notes to capture memories, thoughts, and feelings about the songs that soundtrack your life.
+
+**🎵 Spotify Integration** - Connect your Spotify account to automatically import your recently played tracks and add personal notes to create a comprehensive music diary. 
 
 This app is designed for anyone who enjoys journaling, loves music, treasures memories, or wants to track their life through the lens of the songs they listen to.
 
@@ -11,33 +13,51 @@ I chose this project because music is a big part of my daily life, I’m almost 
 
 ## User Stories
 
-- As a user, I want to be able to add multiple journal entries to my music journal and specify the song title, artist, mood, and date.
-- As a user, I want to be able to remove multiple journal entries.
-- As a user, I want to be able to update a spesific category of every journal entry; including song title, artist, mood, and date.
-- As a user, I want to be able to filter and view my journal enteires by categories; including song title, artist, mood, and date.
-- As a user, I want to be given the option to save my journal to a choosen file.
-- As a user, I want to be given the option to import my journal from a file.
-- As a user, I want to be reminded to save my journal (if I want to) before closing the app.
+- As a user, I want to connect my Spotify account to automatically import my listening history.
+- As a user, I want to add personal notes to any song entry to capture memories and thoughts.
+- As a user, I want to view my music diary entries organized by date.
+- As a user, I want to filter my entries by artist to see my listening patterns.
+- As a user, I want to remove entries from my diary if needed.
+- As a user, I want to save my music diary to preserve my memories.
+- As a user, I want to load my previously saved music diary.
+- As a user, I want to be reminded to save my diary before closing the app.
 
-## Instruction for End User:
+## Instructions
 
-- You can generate the first required action related to the user story "adding multiple journal entries to your music journal" by clicking the "Add Entry" button at the bottom of the application window and filling in the song title, artist, mood, and date.
-- You can generate the second required action related to the user story "removing multiple journal entries to your music journal" by clicking on the entry you want to remove and clicking "Remove Entry" button at the bottom of the application window.
-- You can save the state of my application by clicking the "Save Journal" button at the bottom of the window.
-- You can reload the state of my application by clicking the "Load Journal" button.
+### Getting Started:
+1. **Connect to Spotify**: Click "Connect Spotify" to authenticate with your Spotify account. Follow the authentication dialog to log in and authorize the app.
+2. **Import Your Listening History**: After connecting, click "Import Listening History" to load your recently played songs. Choose how many tracks to load (1-50), then select tracks to add to your diary.
+3. **Add Personal Notes**: Select any entry and click "Add Notes" to add your thoughts, memories, or feelings about the song.
 
-### Instruction for updating:
-- You can "update" the entry's song name by selecting the desired entry and clicking "Update Title" button at the bottom of the application window, and entering the new title in the pop-up page.
-- You can "update" the entry's artist name by selecting the desired entry and clicking "Update Artist" button at the bottom of the application window, and entering the new artist in the pop-up page.
-- You can "update" the entry's date by selecting the desired entry and clicking "Update Date" button at the bottom of the application window, and entering the new date in the pop-up page.
-- You can "update" the entry's mood by selecting the desired entry and clicking "Update Mood" button at the bottom of the application window, and entering the new mood in the pop-up page.
+### Managing Your Diary:
+- **Filter by Date**: Click "Filter by Date" to see entries from a specific date
+- **Filter by Artist**: Click "Filter by Artist" to see all entries from a particular artist
+- **Remove Entries**: Select an entry and click "Remove Entry" to delete it from your diary
+- **Save Your Diary**: Click "Save Journal" to preserve your music memories
+- **Load Your Diary**: Click "Load Journal" to restore your previously saved diary
 
-### Instruction for filtering:
-- You can "filter and view" a list of entries with the same song name by clicking "Filter by Title" button at the bottom of the application window and entering the desired song title.
-- You can "filter and view" a list of entries with the same song name by clicking "Filter by Artist" button at the bottom of the application window and entering the desired artist.
-- You can "filter and view" a list of entries with the same song name by clicking "Filter by Date" button at the bottom of the application window and entering the desired date.
-- You can "filter and view" a list of entries with the same song name by clicking "Filter by Mood" button at the bottom of the application window and entering the desired mood.
-- After every filtering, you can "view" the list of all of your enteries by clicking "View All" button at the bottom of the application window.
+**Note**: For detailed Spotify setup instructions, see [SPOTIFY_SETUP.md](SPOTIFY_SETUP.md).
+
+## Building and Running
+
+### Prerequisites
+- Java 11 or higher
+- Spotify account (for Spotify integration features)
+
+### Build and Run
+```bash
+# Build the project
+./gradlew build
+
+# Run the application
+./gradlew run
+```
+
+### Spotify Setup
+Before using Spotify features, you need to:
+1. Create a Spotify app at [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Update the credentials in `src/main/model/SpotifyService.java`
+3. See [SPOTIFY_SETUP.md](SPOTIFY_SETUP.md) for detailed instructions
 
 ### Phase 4: Task 2
 Tue Aug 05 14:37:48 PDT 2025 → Added entry (ID: 1) - "aaa" by ccccc, Date: 2020-04-05, Mood: HAPPY

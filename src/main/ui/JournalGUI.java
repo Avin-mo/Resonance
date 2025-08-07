@@ -3,6 +3,7 @@ package ui;
 
 import model.Entry;
 import model.Journal;
+import model.SpotifyService;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -18,6 +19,7 @@ public class JournalGUI extends JFrame {
     private Journal journal;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private SpotifyService spotifyService;
     private boolean journalSaved = true;
 
     private DefaultListModel<String> entryListModel;
@@ -27,7 +29,7 @@ public class JournalGUI extends JFrame {
     // into memory,
     // and sets up the window closing behavior.
     public JournalGUI() {
-        super("Resonance - Music Mood Journal");
+        super("Resonance - Music Diary (Demo Mode)");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -35,6 +37,7 @@ public class JournalGUI extends JFrame {
         journal = new Journal();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        spotifyService = new SpotifyService();
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -81,18 +84,13 @@ public class JournalGUI extends JFrame {
     // the GUI.
     // Each button is labeled and connected to its corresponding action.
     private JPanel createButtonPanel() {
-        JPanel buttons = new JPanel(new GridLayout(6, 2));
-        buttons.add(createButton("Add Entry", this::addEntry));
+        JPanel buttons = new JPanel(new GridLayout(4, 2));
+        buttons.add(createButton("Connect Spotify", this::connectSpotify));
+        buttons.add(createButton("Import Listening History", this::importSpotifyTracks));
+        buttons.add(createButton("Add Notes", this::addNotes));
         buttons.add(createButton("Remove Entry", this::removeEntry));
-        buttons.add(createButton("Update Title", this::updateEntryTitle));
-        buttons.add(createButton("Update Artist", this::updateEntryArtist));
-        buttons.add(createButton("Update Date", this::updateEntryDate));
-        buttons.add(createButton("Update Mood", this::updateEntryMood));
-        buttons.add(createButton("View All", this::refreshList));
-        buttons.add(createButton("Filter by Title", this::filterByTitle));
-        buttons.add(createButton("Filter by Artist", this::filterByArtist));
         buttons.add(createButton("Filter by Date", this::filterByDate));
-        buttons.add(createButton("Filter by Mood", this::filterByMood));
+        buttons.add(createButton("Filter by Artist", this::filterByArtist));
         buttons.add(createButton("Save Journal", this::saveJournal));
         buttons.add(createButton("Load Journal", this::loadJournal));
         return buttons;
@@ -129,27 +127,7 @@ public class JournalGUI extends JFrame {
         }
     }    
 
-    // REQUIRES: valid user input through dialogs for title, artist, date, and mood
-    // MODIFIES: this, journal
-    // EFFECTS: adds a new entry to the journal and updates the display; shows error
-    // if input is invalid
-    private void addEntry() {
-        String title = JOptionPane.showInputDialog(this, "Enter song title:");
-        String artist = JOptionPane.showInputDialog(this, "Enter artist:");
-        String dateStr = JOptionPane.showInputDialog(this, "Enter date (YYYY-MM-DD):");
-        String moodStr = JOptionPane.showInputDialog(this, "Enter mood (HAPPY, SAD, CALM, ANGRY, EXCITED):");
 
-        try {
-            LocalDate date = LocalDate.parse(dateStr);
-            Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
-            Entry entry = new Entry(title, artist, date, mood);
-            journal.addEntry(entry);
-            journalSaved = false;
-            refreshList();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid input. Entry not added.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     // REQUIRES: a journal entry to be selected
     // MODIFIES: this, journal
@@ -168,103 +146,57 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // REQUIRES: a journal entry to be selected and a valid new title input
-    // MODIFIES: this, journal
-    // EFFECTS: updates the title of the selected entry; shows warning if no entry
-    // is selected
-    private void updateEntryTitle() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry entry = journal.getAllEntries().get(index);
-            String newTitle = JOptionPane.showInputDialog(this, "Enter new title:", entry.getSongName());
-            if (newTitle != null && !newTitle.isBlank()) {
-                entry.updateSongTitle(newTitle);
-                journalSaved = false;
-                refreshList();
-            }
-        } else {
-            JOptionPane
-                    .showMessageDialog(this, "Please select an entry to update.", "No selection",
-                            JOptionPane.WARNING_MESSAGE);
-        }
-    }
 
-    // REQUIRES: a journal entry to be selected and a valid new artist input
+    
+    // REQUIRES: a journal entry to be selected
     // MODIFIES: this, journal
-    // EFFECTS: updates the artist of the selected entry; shows warning if no entry
-    // is selected
-    private void updateEntryArtist() {
+    // EFFECTS: adds or updates notes for the selected entry; shows warning if no entry is selected
+    private void addNotes() {
         int index = entryJList.getSelectedIndex();
         if (index != -1) {
             Entry entry = journal.getAllEntries().get(index);
-            String newArtist = JOptionPane.showInputDialog(this, "Enter new artist:", entry.getSongArtist());
-            if (newArtist != null && !newArtist.isBlank()) {
-                entry.updateSongArtist(newArtist);
+            String currentNotes = entry.getNotes();
+            String newNotes = JOptionPane.showInputDialog(this, "Enter notes for this song:", currentNotes);
+            if (newNotes != null) {
+                entry.updateNotes(newNotes);
                 journalSaved = false;
                 refreshList();
             }
         } else {
-            JOptionPane
-                    .showMessageDialog(this, "Please select an entry to update.", "No selection",
-                            JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
-    // REQUIRES: a journal entry to be selected and a valid new date input
-    // MODIFIES: this, journal
-    // EFFECTS: updates the date of the selected entry; shows warning if no entry is
-    // selected
-    private void updateEntryDate() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry entry = journal.getAllEntries().get(index);
-            String newDateStr = JOptionPane.showInputDialog(this, "Enter new date (YYYY-MM-DD):",
-                    entry.getDate().toString());
-            try {
-                LocalDate newDate = LocalDate.parse(newDateStr);
-                entry.updateDate(newDate);
-                journalSaved = false;
-                refreshList();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid date format.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection",
+            JOptionPane.showMessageDialog(this, "Please select an entry to add notes to.", "No selection",
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-
-    // REQUIRES: a journal entry to be selected and a valid new mood input
-    // MODIFIES: this, journal
-    // EFFECTS: updates the mood of the selected entry; shows warning if no entry is
-    // selected
-    private void updateEntryMood() {
-        int index = entryJList.getSelectedIndex();
-        if (index != -1) {
-            Entry entry = journal.getAllEntries().get(index);
-            String newMoodStr = JOptionPane.showInputDialog(this, "Enter new mood (HAPPY, SAD, CALM, ANGRY, EXCITED):",
-                    entry.getMood().toString());
-            try {
-                Entry.Mood newMood = Entry.Mood.valueOf(newMoodStr.toUpperCase());
-                entry.updateMood(newMood);
-                journalSaved = false;
-                refreshList();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry to update.", "No selection",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
+    
     // MODIFIES: this
-    // EFFECTS: filters and displays entries with matching song title
-    private void filterByTitle() {
-        String title = JOptionPane.showInputDialog(this, "Enter song title to filter by:");
-        if (title != null) {
-            displayFilteredEntries(journal.getEnteriesBySongTitle(title));
+    // EFFECTS: opens Spotify authentication dialog
+    private void connectSpotify() {
+        SpotifyAuthDialog authDialog = new SpotifyAuthDialog(this, spotifyService);
+        authDialog.setVisible(true);
+        
+        if (authDialog.isAuthSuccessful()) {
+            JOptionPane.showMessageDialog(this, 
+                "Successfully connected to Spotify (Demo Mode)! You can now import mock listening history.", 
+                "Spotify Connected", 
+                JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+    
+    // MODIFIES: this
+    // EFFECTS: opens Spotify import dialog to import tracks from Spotify
+    private void importSpotifyTracks() {
+        if (!spotifyService.isAuthenticated()) {
+            JOptionPane.showMessageDialog(this, 
+                "Please connect to Spotify first using the 'Connect Spotify' button.", 
+                "Not Connected", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        SpotifyImportDialog importDialog = new SpotifyImportDialog(this, spotifyService, journal);
+        importDialog.setVisible(true);
+        journalSaved = false;
+        refreshList();
     }
 
     // MODIFIES: this
@@ -288,18 +220,7 @@ public class JournalGUI extends JFrame {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: filters and displays entries with matching mood
-    private void filterByMood() {
-        String moodStr = JOptionPane.showInputDialog(this,
-                "Enter mood to filter by (HAPPY, SAD, CALM, ANGRY, EXCITED):");
-        try {
-            Entry.Mood mood = Entry.Mood.valueOf(moodStr.toUpperCase());
-            displayFilteredEntries(journal.getEnteriesByMood(mood));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Invalid mood.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+
 
     // REQUIRES: entries is not null
     // MODIFIES: this
@@ -353,11 +274,13 @@ public class JournalGUI extends JFrame {
     // REQUIRES: e is not null
     // EFFECTS: returns a formatted string version of the entry
     private String formatEntry(Entry e) {
-        return "ID: " + e.getId()
-                + " | \"" + e.getSongName() + "\""
-                + " by " + e.getSongArtist()
-                + " on " + e.getDate()
-                + " | Mood: " + e.getMood();
+        String base = e.getDate() + " | \"" + e.getSongName() + "\" by " + e.getSongArtist();
+        
+        if (!e.getNotes().isEmpty()) {
+            base += " | 📝 " + e.getNotes();
+        }
+        
+        return base;
     }
 
     // EFFECTS: Main method to launch the GUI application.
