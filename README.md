@@ -10,6 +10,8 @@ This app is designed for anyone who enjoys journaling, loves music, treasures me
 
 I chose this project because music is a big part of my daily life, I’m almost always listening to something, and certain periods of my life are deeply tied to the music I was into at the time. For example, when I think back to summer 2018, the songs I listened to then immediately bring back the mood and memories of that time. Until now, I’ve kept these notes in a generic notes app, but I wanted to create something more intentional and personal, a journal made specifically for preserving memories through music.
 
+<b>Note:<b> This is a copy of my CPSC 210 personal project that I've further worked on and enhanced :)
+
 ## Instructions
 
 ### Getting Started:
