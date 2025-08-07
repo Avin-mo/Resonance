@@ -9,8 +9,6 @@ Import your listening history and add personal notes to capture memories, though
 This app is designed for anyone who enjoys journaling, loves music, treasures memories, or wants to track their life through the lens of the songs they listen to.
 
 I chose this project because music is a big part of my daily life, I’m almost always listening to something, and certain periods of my life are deeply tied to the music I was into at the time. For example, when I think back to summer 2018, the songs I listened to then immediately bring back the mood and memories of that time. Until now, I’ve kept these notes in a generic notes app, but I wanted to create something more intentional and personal, a journal made specifically for preserving memories through music.
-
-
 ## User Stories
 
 - As a user, I want to connect my Spotify account to automatically import my listening history.
@@ -58,14 +56,3 @@ Before using Spotify features, you need to:
 1. Create a Spotify app at [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 2. Update the credentials in `src/main/model/SpotifyService.java`
 3. See [SPOTIFY_SETUP.md](SPOTIFY_SETUP.md) for detailed instructions
-
-### Phase 4: Task 2
-Tue Aug 05 14:37:48 PDT 2025 → Added entry (ID: 1) - "aaa" by ccccc, Date: 2020-04-05, Mood: HAPPY
-Tue Aug 05 14:37:48 PDT 2025 → Added entry (ID: 2) - "Heather" by Conan Gray, Date: 2025-04-03, Mood: ANGRY
-Tue Aug 05 14:37:48 PDT 2025 → Viewed all entries (2 total)
-Tue Aug 05 14:38:15 PDT 2025 → Added entry (ID: 3) - "Love Story" by Taylor Swift, Date: 2025-04-06, Mood: HAPPY
-Tue Aug 05 14:38:15 PDT 2025 → Viewed all entries (3 total)
-Tue Aug 05 14:38:20 PDT 2025 → Viewed all entries (3 total)
-Tue Aug 05 14:38:25 PDT 2025 → Viewed all entries (3 total)
-Tue Aug 05 14:38:33 PDT 2025 → Filtered entries by mood: HAPPY (2 match(es))
-Tue Aug 05 14:38:35 PDT 2025 → Viewed all entries (3 total)
